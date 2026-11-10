@@ -188,8 +188,8 @@ textarea.in{min-height:92px;max-height:240px;resize:vertical;line-height:1.55;fi
 .chip:disabled{opacity:.45;cursor:not-allowed}
 .help{font-size:12.5px;color:var(--tx3);margin-top:7px}
 
-.in.howx{flex:1 1 190px;max-width:300px;min-height:40px;padding:7px 15px;border-radius:999px;font-size:13.5px}
-.in.howx.on{border-color:var(--acc-fill);background:var(--tint);font-weight:600}
+.in.howx{flex:1 1 100%;display:block;width:100%;min-height:44px;max-height:170px;padding:10px 14px;border-radius:14px;font-size:14.5px;line-height:1.5;resize:none;overflow-y:auto;field-sizing:content}
+.in.howx.on{border-color:var(--acc-fill);background:var(--tint)}
 
 /* ── 유형 카드 ── */
 .tcard{position:relative;text-align:left;padding:15px 15px 14px;border-radius:17px;border:1.5px solid var(--line);background:var(--surf);
@@ -578,7 +578,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
           <div class="lbl">화면 밑그림</div>
           <div class="grid3 lays" id="layGrid"></div>
           <div class="fld">
-            <div class="lbl">분위기 <small>고르거나 직접 써요</small></div>
+            <div class="lbl">분위기 <small>고르거나 직접 써요 · 100자까지</small></div>
             <div class="chips" id="moodChips"></div>
           </div>
         </div>
@@ -724,7 +724,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
   AI가 만든 결과는 초안이에요. 과학 내용이 맞는지 교과서와 견주어 확인하고, 선생님과 함께 다듬어요.<br>
   나이 제한이 있는 AI는 선생님 안내에 따라 써요. 입력한 내용은 이 브라우저에만 저장되고 어디로도 보내지 않아요.<br>
   ⓒ 2026 송쌤과학 · <a href="https://www.youtube.com/@songsamscience" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">YouTube @songsamscience</a>
-  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">Instagram @songsamscience</a> · v1.3 · 2026-11-11
+  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">Instagram @songsamscience</a> · v1.4 · 2026-11-11
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1515,7 +1515,7 @@ const GRADES=[
  {id:'h1b',label:'고1 통합과학2',level:'고등학교 1학년 통합과학',units:['변화와 다양성','환경과 에너지','과학과 미래 사회']}
 ];
 
-/* ════════ 송쌤과학 가상실험실 만들기 (학생용) v1.3 ════════ */
+/* ════════ 송쌤과학 가상실험실 만들기 (학생용) v1.4 ════════ */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LS='ssl-student-v1';
@@ -1858,6 +1858,11 @@ function renderGames(){
   $('#ideaChips').innerHTML=IDEAS.map(t=>'<button class="chip ghost" type="button" data-idea="'+esc(t)+'">'+esc(t)+'</button>').join('');
   $('#gIdea').value=S.idea;
 }
+const DIRECT_MAX=100;
+function direct(k,ph,lab){const v=S.f[S.type][k]||'';
+  return '<textarea class="in howx'+(one(v)?' on':'')+'" rows="1" data-f="'+k+'" maxlength="'+DIRECT_MAX+'" placeholder="'+ph+'" aria-label="'+lab+'">'+esc(v)+'</textarea>';}
+function fitOne(t){if(t.offsetParent===null)return;t.style.height='auto';t.style.height=(t.scrollHeight+3)+'px'}
+function fitDirect(){$$('textarea.howx').forEach(fitOne)}
 function syncCustom(){
   const on=S.game==='custom';
   $$('.gcard').forEach(c=>c.setAttribute('aria-pressed',!on&&c.dataset.g===S.game));
@@ -1882,8 +1887,8 @@ function renderLab(){
   us.innerHTML='<option value="">'+(!G?'학년을 먼저 골라요':f.grade==='free'?'갈래 고르지 않음':'단원 고르지 않음')+'</option>'+(G?G.units.map(u=>'<option'+(u===f.unit?' selected':'')+'>'+esc(u)+'</option>').join(''):'');
   $('#lblQ').innerHTML=T.qLabel;$('#fQ').value=f.q;$('#fQ').placeholder=T.qPh;
   let h='';
-  if(T.hows)h+='<div class="fld"><div class="lbl">게임 방식 <small>고르거나 직접 써요</small></div><div class="chips">'+T.hows.map(x=>'<button class="chip" type="button" data-how="'+x+'" aria-pressed="'+(!one(f.howx)&&x===f.how)+'">'+x+'</button>').join('')
-    +'<input class="in howx'+(one(f.howx)?' on':'')+'" data-f="howx" maxlength="20" placeholder="직접 입력 · 예) 빙고, 방 탈출" aria-label="게임 방식 직접 입력" value="'+esc(f.howx||'')+'"></div></div>';
+  if(T.hows)h+='<div class="fld"><div class="lbl">게임 방식 <small>고르거나 직접 써요 · 100자까지</small></div><div class="chips">'+T.hows.map(x=>'<button class="chip" type="button" data-how="'+x+'" aria-pressed="'+(!one(f.howx)&&x===f.how)+'">'+x+'</button>').join('')
+    +direct('howx','직접 입력 · 예) 카드를 뒤집어 짝을 맞추고, 틀리면 다시 뒤집히는 방식','게임 방식 직접 입력')+'</div></div>';
   const fld=fd=>'<label class="fld"><span class="lbl">'+fd.label+' <small>'+fd.sm+'</small></span>'+(fd.area
      ?'<textarea class="in" data-f="'+fd.k+'" maxlength="'+(fd.max||200)+'" placeholder="'+esc(fd.ph)+'">'+esc(f[fd.k]||'')+'</textarea>'
      :'<input class="in" data-f="'+fd.k+'" maxlength="70" placeholder="'+esc(fd.ph)+'" value="'+esc(f[fd.k]||'')+'">')+'</label>';
@@ -1892,19 +1897,19 @@ function renderLab(){
   else if(areas.length)h+=areas.map(fld).join('')+inputs.map(fld).join('');
   else h+='<div class="grid2">'+inputs.slice(0,2).map(fld).join('')+'</div>'+inputs.slice(2).map(fld).join('');
   $('#typeFields').innerHTML=h;
-  renderPicks();
+  renderPicks();fitDirect();
   $('#promise').innerHTML=PROMISES.map(p=>'<li>'+p+'</li>').join('');
   $('#fRule').value=f.rule;
 }
 function renderPicks(){
   const ex=S.ex[S.type],full=ex.length>=3,f=S.f[S.type];
-  const pill=(k,ph,lab)=>'<input class="in howx'+(one(f[k])?' on':'')+'" data-f="'+k+'" maxlength="20" placeholder="'+ph+'" aria-label="'+lab+'" value="'+esc(f[k]||'')+'">';
-  $('#extraChips').innerHTML=EXTRAS.map(e=>{const on=ex.includes(e[0]);return '<button class="chip" type="button" data-ex="'+e[0]+'" aria-pressed="'+on+'"'+(!on&&full?' disabled':'')+'>'+e[1]+'</button>'}).join('')+pill('exx','직접 입력 · 예) 타이머, 순위표','있으면 좋은 것 직접 입력');
-  $('#exHelp').textContent=full?'3개를 모두 골랐어요 · 더 넣고 싶은 것은 직접 써요':'3개까지 고르거나 직접 써요 · 많을수록 코드가 길어져요';
+  $('#extraChips').innerHTML=EXTRAS.map(e=>{const on=ex.includes(e[0]);return '<button class="chip" type="button" data-ex="'+e[0]+'" aria-pressed="'+on+'"'+(!on&&full?' disabled':'')+'>'+e[1]+'</button>'}).join('')+direct('exx','직접 입력 · 예) 남은 시간을 보여 주는 타이머와 내 최고 기록','있으면 좋은 것 직접 입력');
+  $('#exHelp').textContent=full?'3개를 모두 골랐어요 · 더 넣고 싶은 것은 직접 써요':'3개까지 고르거나 직접 써요(100자까지) · 많을수록 코드가 길어져요';
   $('#layGrid').innerHTML=LAYS.map(l=>'<button class="lay" type="button" data-lay="'+l[0]+'" aria-pressed="'+(l[0]===S.lay[S.type])+'"><svg viewBox="0 0 96 60" aria-hidden="true">'+l[4]+'</svg><b>'+l[1]+'</b><small>'+l[2]+'</small></button>').join('');
-  $('#moodChips').innerHTML=MOODS.map(m=>'<button class="chip" type="button" data-mood="'+m[0]+'" aria-pressed="'+(!one(f.moodx)&&m[0]===S.md[S.type])+'">'+m[1]+'</button>').join('')+pill('moodx','직접 입력 · 예) 파스텔 톤, 바닷속','분위기 직접 입력');
+  $('#moodChips').innerHTML=MOODS.map(m=>'<button class="chip" type="button" data-mood="'+m[0]+'" aria-pressed="'+(!one(f.moodx)&&m[0]===S.md[S.type])+'">'+m[1]+'</button>').join('')+direct('moodx','직접 입력 · 예) 바닷속처럼 푸른 파스텔 톤에 물방울이 떠다니는 느낌','분위기 직접 입력');
   $('#modeChips').innerHTML=MODES.map(m=>'<button class="chip" type="button" data-mode="'+m[0]+'" aria-pressed="'+(m[0]===S.mode)+'">'+m[1]+'</button>').join('');
   $('#modeHelp').textContent=MODES.find(m=>m[0]===S.mode)[2];
+  fitDirect();
 }
 function renderCheck(){
   $('#checks').innerHTML=CHECKS.map((c,i)=>{const ok=S.chk.includes(i);return '<li class="'+(ok?'ok':'')+'"><label><input type="checkbox" data-chk="'+i+'"'+(ok?' checked':'')+'><span>'+c[0]+'</span></label><button class="chip ghost" type="button" data-fix="'+c[1]+'">문제 있어요 · 고쳐 달라는 말 복사</button></li>'}).join('');
@@ -1994,6 +1999,7 @@ function setView(v,keepScroll){
   ['game','lab','fix','pub'].forEach(k=>{$('#v-'+k).hidden=k!==v;const t=$('#tab-'+k);t.setAttribute('aria-selected',k===v);t.tabIndex=k===v?0:-1});
   if(v==='fix')renderFix();
   if(v==='pub')renderPub();
+  if(v==='lab')fitDirect();
   renderPrev();
   if(!keepScroll){const top=$('.hero').offsetTop+$('.hero').offsetHeight;if(window.scrollY>top)window.scrollTo({top:top});}
 }
@@ -2097,7 +2103,7 @@ document.addEventListener('input',e=>{
   else if(t.id==='fRule')S.f[S.type].rule=t.value;
   else if(t.dataset&&t.dataset.f){const f=S.f[S.type];f[t.dataset.f]=t.value;
     const k=t.dataset.f,on=!!one(t.value);
-    if(k==='howx'||k==='exx'||k==='moodx')t.classList.toggle('on',on);
+    if(k==='howx'||k==='exx'||k==='moodx'){t.classList.toggle('on',on);fitOne(t)}
     if(k==='howx')$$('[data-how]').forEach(c=>c.setAttribute('aria-pressed',!on&&c.dataset.how===f.how));
     if(k==='moodx')$$('[data-mood]').forEach(c=>c.setAttribute('aria-pressed',!on&&c.dataset.mood===S.md[S.type]))}
   else return;
