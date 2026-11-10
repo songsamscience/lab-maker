@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>송쌤과학 가상실험실 만들기 · 학생용</title>
+<meta name="description" content="중학생이 AI에게 붙여 넣을 프롬프트를 골라서 과학 게임과 가상실험실 초안을 만드는 곳">
+<meta name="theme-color" content="#0A7780">
+<script>(function(){try{var t=localStorage.getItem('ssl-theme');if(t==='light'||t==='dark')document.documentElement.dataset.t=t}catch(e){}})();</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.css">
+<style>
+:root{
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:32px;--sp8:40px;
+  --r1:8px;--r2:12px;--r3:18px;--r4:26px;
+  --pink:#FFB7B2;--pink-tx:#2A1512;
+  --font-t:'Wanted Sans Variable','Wanted Sans','Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-b:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+  --dur:.2s;--ease:cubic-bezier(.2,.7,.3,1);
+  --h-top:58px;--h-tabs:68px;
+  /* 밝은 테마 */
+  --bg:#F3F7F8;--bg2:#E9F0F2;--surf:#FFFFFF;--surf2:#F6FAFB;--line:#D9E3E7;--line2:#BFCDD4;
+  --tx:#13212A;--tx2:#465763;--tx3:#5A6B79;
+  --acc:#08666E;--acc-fill:#0A7780;--acc-tx:#fff;--acc-deep:#07545B;
+  --ok:#137F5B;--ok-ink:#0C6648;--on-ok:#fff;--warn:#8F5E05;--on-warn:#fff;--warn-bg:#FFF4DA;
+  --tint:rgba(10,119,128,.09);--tint2:rgba(10,119,128,.16);
+  --c-ex:#0067A3;--c-lab:#00795A;--c-game:#B03F7A;
+  --t-ex:rgba(0,114,178,.10);--t-lab:rgba(0,158,115,.11);--t-game:rgba(204,121,167,.15);
+  --sh1:0 1px 2px rgba(18,38,48,.08);--sh2:0 10px 28px rgba(18,38,48,.11);--sh3:0 22px 60px rgba(18,38,48,.18);
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root:not([data-t="light"]){
+  --bg:#0B1215;--bg2:#111A1F;--surf:#152026;--surf2:#1B2930;--line:#26353D;--line2:#3A4D57;
+  --tx:#E5EEF2;--tx2:#A9BAC4;--tx3:#93A5B0;
+  --acc:#52D2C8;--acc-fill:#0A747B;--acc-tx:#fff;--acc-deep:#0E4A50;
+  --ok:#43C795;--ok-ink:#5FD6A8;--on-ok:#04140E;--warn:#E9B24A;--on-warn:#1B1300;--warn-bg:rgba(233,178,74,.13);
+  --tint:rgba(82,210,200,.11);--tint2:rgba(82,210,200,.2);
+  --c-ex:#62B9EC;--c-lab:#45CC9E;--c-game:#EA98C3;
+  --t-ex:rgba(98,185,236,.13);--t-lab:rgba(69,204,158,.13);--t-game:rgba(234,152,195,.14);
+  --sh1:0 1px 2px rgba(0,0,0,.3);--sh2:0 10px 28px rgba(0,0,0,.36);--sh3:0 22px 60px rgba(0,0,0,.5);
+  color-scheme:dark;
+}}
+html[data-t="dark"]{
+  --bg:#0B1215;--bg2:#111A1F;--surf:#152026;--surf2:#1B2930;--line:#26353D;--line2:#3A4D57;
+  --tx:#E5EEF2;--tx2:#A9BAC4;--tx3:#93A5B0;
+  --acc:#52D2C8;--acc-fill:#0A747B;--acc-tx:#fff;--acc-deep:#0E4A50;
+  --ok:#43C795;--ok-ink:#5FD6A8;--on-ok:#04140E;--warn:#E9B24A;--on-warn:#1B1300;--warn-bg:rgba(233,178,74,.13);
+  --tint:rgba(82,210,200,.11);--tint2:rgba(82,210,200,.2);
+  --c-ex:#62B9EC;--c-lab:#45CC9E;--c-game:#EA98C3;
+  --t-ex:rgba(98,185,236,.13);--t-lab:rgba(69,204,158,.13);--t-game:rgba(234,152,195,.14);
+  --sh1:0 1px 2px rgba(0,0,0,.3);--sh2:0 10px 28px rgba(0,0,0,.36);--sh3:0 22px 60px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--font-b);font-size:15.5px;line-height:1.6;
+  font-variant-numeric:tabular-nums;letter-spacing:-.012em;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3,h4{font-family:var(--font-t);font-weight:700;letter-spacing:-.028em;margin:0;line-height:1.3}
+p{margin:0}
+button,input,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:6px}
+[hidden]{display:none!important}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── 머리 ── */
+.top{position:sticky;top:0;z-index:40;height:var(--h-top);display:flex;align-items:center;gap:var(--sp3);
+  padding:0 var(--sp5);background:color-mix(in srgb,var(--surf) 88%,transparent);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+.logo{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-t);font-weight:800;font-size:13px;
+  background:var(--pink);color:var(--pink-tx);padding:5px 12px 5px 10px;border-radius:999px;flex:none;text-decoration:none}
+.logo svg{width:15px;height:15px}
+.htitle{font-family:var(--font-t);font-weight:700;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.htitle b{margin-left:6px;font-size:11.5px;font-weight:700;color:var(--acc);background:var(--tint);padding:3px 8px;border-radius:999px;vertical-align:1px}
+.sp{flex:1}
+.ico{width:40px;height:40px;flex:none;display:grid;place-items:center;border:1px solid transparent;background:transparent;border-radius:var(--r2);color:var(--tx2);transition:var(--dur) var(--ease)}
+.ico:hover{background:var(--bg2);color:var(--tx)}
+.ico svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── 첫머리 ── */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(900px 260px at 88% -40%,rgba(255,183,178,.38),transparent 62%),
+  linear-gradient(118deg,var(--acc-deep),var(--acc-fill) 58%,#12959A);color:#fff}
+.hero-in{max-width:1400px;margin:0 auto;padding:17px var(--sp5) 19px;display:flex;align-items:flex-end;gap:var(--sp6);position:relative}
+.eyebrow{font-family:var(--font-t);font-size:11.5px;font-weight:700;letter-spacing:.14em;opacity:.78;margin-bottom:6px}
+.hero h1{font-size:clamp(21px,2.5vw,29px);font-weight:800;letter-spacing:-.035em}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,rgba(255,183,178,.55) 62%);padding:0 2px}
+.lead{margin-top:7px;font-size:14.5px;opacity:.9;max-width:640px}
+.flow{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none;font-size:12.5px;font-weight:600}
+.flow span{padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);white-space:nowrap}
+.flow i{font-style:normal;opacity:.6}
+.hero::after{content:"";position:absolute;right:-40px;bottom:-70px;width:220px;height:220px;border-radius:44px;
+  border:1.5px solid rgba(255,255,255,.16);transform:rotate(18deg);pointer-events:none}
+
+/* ── 단계 탭 ── */
+.tabs{position:sticky;top:var(--h-top);z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs-in{max-width:1400px;margin:0 auto;padding:10px var(--sp5);display:flex;gap:var(--sp2)}
+.tab{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;height:48px;border-radius:14px;
+  border:1px solid var(--line);background:var(--surf);color:var(--tx2);text-align:left;transition:var(--dur) var(--ease)}
+.tab:hover{border-color:var(--line2);color:var(--tx)}
+.tab i{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-style:normal;
+  font-family:var(--font-t);font-weight:800;font-size:14px;background:var(--bg2);color:var(--tx3)}
+.tab span{min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.tab b{font-family:var(--font-t);font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab b .sm{display:none}
+.tab small{font-size:11.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab[aria-selected="true"]{background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx);box-shadow:var(--sh2)}
+.tab[aria-selected="true"] i{background:rgba(255,255,255,.2);color:#fff}
+.tab[aria-selected="true"] small{color:#fff}
+
+/* ── 큰 틀 ── */
+.page{max-width:1400px;margin:0 auto;padding:var(--sp5) var(--sp5) var(--sp8)}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 404px;gap:var(--sp5);align-items:start;margin-top:var(--sp5)}
+main{min-width:0}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r3);padding:var(--sp5);box-shadow:var(--sh1)}
+.card+.card{margin-top:var(--sp4)}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:var(--sp4)}
+.ch .n{flex:none;width:28px;height:28px;border-radius:9px;background:var(--acc-fill);color:var(--acc-tx);display:grid;place-items:center;font-family:var(--font-t);font-weight:800;font-size:13.5px}
+.ch h2,.ch h3{font-size:16.5px}
+.ch .sub{margin-left:auto;font-size:12.5px;color:var(--tx3);text-align:right}
+.intro{display:flex;align-items:baseline;gap:var(--sp3);flex-wrap:wrap;margin:2px 2px var(--sp3)}
+.intro h2{font-size:20px;font-weight:800}
+.intro p{color:var(--tx2);font-size:14px}
+.lbl{font-size:12.5px;font-weight:700;color:var(--tx2);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.lbl small{font-weight:500;color:var(--tx3)}
+
+/* ── AI 고르기 줄 ── */
+.sitebar{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--sp3) var(--sp5);align-items:center;padding:var(--sp4) var(--sp5)}
+.sitebar .q{font-family:var(--font-t);font-weight:700;font-size:15px;white-space:nowrap}
+.sitebar .q small{display:block;font-family:var(--font-b);font-weight:500;font-size:12px;color:var(--tx3)}
+.ais{display:flex;flex-wrap:wrap;gap:var(--sp2)}
+.aib{position:relative;display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 15px 0 8px;border-radius:13px;
+  border:1.5px solid var(--line);background:var(--surf);font-weight:700;font-size:14px;color:var(--tx2);transition:var(--dur) var(--ease)}
+.aib:hover{border-color:var(--line2);color:var(--tx)}
+.aib .mk{width:30px;height:30px;border-radius:9px;background:var(--k);color:#fff;font-family:var(--font-t);font-size:11px;font-weight:800;display:grid;place-items:center;letter-spacing:0}
+.aib[aria-pressed="true"]{border-color:var(--acc);background:var(--tint);color:var(--tx);box-shadow:0 0 0 3px var(--tint)}
+.aib .rec{position:absolute;top:-9px;right:-6px;font-size:10.5px;font-weight:800;background:var(--pink);color:var(--pink-tx);padding:2px 7px;border-radius:999px;box-shadow:var(--sh1)}
+.ainote{grid-column:1/-1;display:flex;gap:var(--sp2) var(--sp4);flex-wrap:wrap;align-items:center;font-size:13px;color:var(--tx2);
+  background:var(--surf2);border:1px dashed var(--line2);border-radius:var(--r2);padding:9px 13px}
+.ainote b{color:var(--tx)}
+.ainote .who{font-size:12px;font-weight:700;color:var(--acc);background:var(--tint);padding:2px 9px;border-radius:999px;white-space:nowrap}
+
+/* ── 게임 카드 ── */
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:var(--sp3)}
+.gcard{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left;padding:13px 13px 12px;min-height:118px;
+  border-radius:16px;border:1.5px solid var(--line);background:var(--surf);transition:var(--dur) var(--ease)}
+.gcard:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:var(--sh2)}
+.gcard .ic{width:42px;height:42px;border-radius:13px;background:var(--bg2);display:grid;place-items:center;font-size:23px;line-height:1}
+.gcard .no{position:absolute;top:12px;right:13px;font-family:var(--font-t);font-size:11.5px;font-weight:800;color:var(--tx3)}
+.gcard b{font-family:var(--font-t);font-size:14.5px;font-weight:700;margin-top:3px}
+.gcard small{font-size:12px;color:var(--tx2);line-height:1.4}
+.gcard .kd{margin-top:auto;font-size:11px;font-weight:700;color:var(--tx3);background:var(--bg2);padding:2px 8px;border-radius:999px}
+.gcard[aria-pressed="true"]{border-color:var(--acc);background:var(--tint);box-shadow:0 0 0 3px var(--tint)}
+.gcard[aria-pressed="true"] .ic{background:var(--surf)}
+.gcard[aria-pressed="true"] .no{color:var(--acc)}
+.gcard[aria-pressed="true"] .no::before{content:"✓ "}
+
+/* ── 입력 ── */
+.fld{display:block;margin-top:var(--sp4)}
+.ch+.fld,.grid2>.fld,#typeFields>.fld:first-child,#typeFields>.grid2:first-child{margin-top:0}
+.fld+.grid2{margin-top:var(--sp4)}
+.in{width:100%;min-height:46px;padding:10px 13px;border-radius:var(--r2);border:1.5px solid var(--line);background:var(--surf2);
+  font-size:15px;transition:border-color var(--dur) var(--ease),background var(--dur) var(--ease)}
+textarea.in{min-height:92px;max-height:240px;resize:vertical;line-height:1.55;field-sizing:content}
+.in::placeholder{color:var(--tx3);opacity:1}
+.in:hover{border-color:var(--line2)}
+.in:focus{outline:none;border-color:var(--acc);background:var(--surf);box-shadow:0 0 0 3px var(--tint)}
+.in.need{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn-bg)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp4)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp3)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{min-height:40px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--tx2);
+  font-size:13px;font-weight:600;transition:var(--dur) var(--ease)}
+.chip:hover{border-color:var(--line2);color:var(--tx)}
+.chip[aria-pressed="true"]{background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx)}
+.chip.ghost{background:transparent;border-style:dashed}
+.chip:disabled{opacity:.45;cursor:not-allowed}
+.help{font-size:12.5px;color:var(--tx3);margin-top:7px}
+
+/* ── 유형 카드 ── */
+.tcard{position:relative;text-align:left;padding:15px 15px 14px;border-radius:17px;border:1.5px solid var(--line);background:var(--surf);
+  display:flex;flex-direction:column;gap:5px;transition:var(--dur) var(--ease);--c:var(--c-ex);--t:var(--t-ex)}
+.tcard[data-c="lab"]{--c:var(--c-lab);--t:var(--t-lab)}
+.tcard[data-c="game"]{--c:var(--c-game);--t:var(--t-game)}
+.tcard:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:var(--sh2)}
+.tcard .ti{width:44px;height:44px;border-radius:13px;background:var(--t);color:var(--c);display:grid;place-items:center;margin-bottom:4px}
+.tcard .ti svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tcard b{font-family:var(--font-t);font-size:17px;font-weight:800}
+.tcard b span{font-size:12.5px;font-weight:700;color:var(--c);margin-left:6px}
+.tcard p{font-size:13px;color:var(--tx2);line-height:1.5}
+.tcard small{font-size:12px;color:var(--tx3)}
+.tcard[aria-pressed="true"]{border-color:var(--c);background:var(--t);box-shadow:0 0 0 3px var(--t)}
+.tcard[aria-pressed="true"] .ti{background:var(--surf)}
+.tcard[aria-pressed="true"]::after{content:"✓ 선택";position:absolute;top:13px;right:14px;font-size:11.5px;font-weight:800;color:var(--c)}
+
+/* ── 화면 밑그림 ── */
+.lay{display:flex;flex-direction:column;gap:7px;align-items:stretch;text-align:left;padding:10px;border-radius:14px;border:1.5px solid var(--line);background:var(--surf);transition:var(--dur) var(--ease)}
+.lay svg{width:100%;height:auto;border-radius:8px;background:var(--bg2);display:block}
+.lay svg .a{fill:var(--line2)} .lay svg .b{fill:var(--acc);opacity:.75} .lay svg .c{fill:var(--surf)}
+.lay b{font-size:13px;font-weight:700} .lay small{font-size:11.5px;color:var(--tx3);line-height:1.4}
+.lay:hover{border-color:var(--line2)}
+.lay[aria-pressed="true"]{border-color:var(--acc);background:var(--tint)}
+
+/* ── 약속 목록 ── */
+.promise{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px}
+.promise li{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--tx2)}
+.promise li::before{content:"";flex:none;width:18px;height:18px;margin-top:2px;border-radius:6px;background:var(--tint2) center/11px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%230A7780' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.3l2.3 2.3 4.7-5'/%3E%3C/svg%3E")}
+.split{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--sp4);align-items:end;margin-top:var(--sp4);padding-top:var(--sp4);border-top:1px dashed var(--line2)}
+
+/* ── 내 프롬프트 판 ── */
+.side{position:sticky;top:calc(var(--h-top) + var(--h-tabs) + 14px);min-width:0}
+.panel{display:flex;flex-direction:column;max-height:calc(100vh - var(--h-top) - var(--h-tabs) - 30px);min-height:420px;
+  background:var(--surf);border:1px solid var(--line);border-radius:var(--r3);box-shadow:var(--sh2);overflow:hidden}
+.p-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surf2)}
+.p-head h2{font-size:15px}
+.src{margin-left:auto;max-width:62%;font-size:12px;font-weight:700;color:var(--acc);background:var(--tint);padding:3px 10px;border-radius:999px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-opt{padding:11px 16px 10px;border-bottom:1px solid var(--line);display:grid;gap:9px}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:13px;background:var(--bg2)}
+.seg2 button{min-height:40px;border:0;border-radius:10px;background:transparent;font-size:13.5px;font-weight:700;color:var(--tx2);transition:var(--dur) var(--ease)}
+.seg2 button small{font-weight:600;font-size:11px;margin-left:4px;color:var(--tx3)}
+.seg2 button[aria-pressed="true"]{background:var(--surf);color:var(--tx);box-shadow:var(--sh1)}
+.seg2 button[aria-pressed="true"] small{color:var(--acc)}
+.meter{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--tx3)}
+.bar{flex:1;height:6px;border-radius:99px;background:var(--bg2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--acc-fill),#31B3AC);transition:width .3s var(--ease)}
+.meter.over .bar i{background:var(--warn)}
+.meter b{font-weight:700;color:var(--tx2);white-space:nowrap}
+.meter.over b{color:var(--warn)}
+.over-msg{font-size:12.5px;color:var(--warn);background:var(--warn-bg);border-radius:10px;padding:7px 10px;display:flex;gap:8px;align-items:center;justify-content:space-between}
+.over-msg button{flex:none;border:0;background:var(--warn);color:var(--on-warn);font-weight:700;font-size:12px;border-radius:8px;padding:5px 9px}
+.p-body{flex:1;min-height:120px;overflow:auto;overscroll-behavior:contain;padding:12px 16px 14px;scrollbar-width:thin}
+.pv h4{font-family:var(--font-b);font-size:12px;font-weight:800;color:var(--acc);letter-spacing:0;margin:13px 0 4px;display:flex;align-items:center;gap:6px}
+.pv h4:first-child{margin-top:0}
+.pv h4 em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--pink-tx);background:var(--pink);padding:1px 7px;border-radius:999px}
+.pv ul{margin:0;padding:0;list-style:none}
+.pv li{position:relative;padding-left:13px;font-size:13.5px;line-height:1.55;color:var(--tx)}
+.pv li+li{margin-top:2px}
+.pv li::before{content:"";position:absolute;left:1px;top:.68em;width:5px;height:5px;border-radius:50%;background:var(--line2)}
+.pv li.mine{background:linear-gradient(transparent 58%,var(--tint2) 58%);display:inline-block}
+.p-act{padding:12px 16px 14px;border-top:1px solid var(--line);background:var(--surf2);display:grid;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 15px;border-radius:13px;
+  border:1.5px solid var(--line2);background:var(--surf);font-weight:700;font-size:14px;color:var(--tx);transition:var(--dur) var(--ease)}
+.btn:hover{border-color:var(--acc);background:var(--tint)}
+.btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.pri{min-height:52px;font-family:var(--font-t);font-size:15.5px;background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx);box-shadow:0 8px 20px rgba(10,119,128,.28)}
+.btn.pri:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.pri:active{transform:none}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.p-foot{border:0;background:none;min-height:36px;margin:-4px 0 -6px;font-size:12.5px;color:var(--tx3);text-align:center;border-radius:10px}
+.p-foot u{color:var(--acc);font-weight:700;text-underline-offset:3px}
+.p-foot:hover{background:var(--tint)}
+
+/* ── 읽는 법 ── */
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.legend div{padding:9px 11px;border-radius:12px;background:var(--surf2);border:1px solid var(--line);font-size:12.5px;color:var(--tx2);line-height:1.45}
+.legend b{display:block;font-size:12.5px;color:var(--acc);font-weight:800}
+
+/* ── 고치기 ── */
+.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:8px}
+.steps li{counter-increment:s;display:flex;gap:11px;align-items:flex-start;font-size:14.5px}
+.steps li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--acc-fill);color:#fff;display:grid;place-items:center;font-family:var(--font-t);font-weight:800;font-size:12.5px}
+.judge{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp3)}
+.judge div{padding:12px 13px;border-radius:14px;border:1px solid var(--line);background:var(--surf2)}
+.judge b{display:flex;align-items:center;gap:6px;font-family:var(--font-t);font-size:14.5px}
+.judge b i{font-style:normal;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;color:var(--on-ok);background:var(--ok)}
+.judge div:nth-child(2) b i{background:#B4483D;color:#fff}
+.judge div:nth-child(3) b i{background:var(--warn);color:var(--on-warn)}
+.judge p{font-size:13px;color:var(--tx2);margin-top:4px;line-height:1.5}
+.fixes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp3)}
+.fix{display:flex;flex-direction:column;gap:8px;padding:13px 14px;border-radius:15px;border:1px solid var(--line);background:var(--surf)}
+.fix b{font-family:var(--font-t);font-size:14.5px;display:flex;align-items:center;gap:8px}
+.fix b i{font-style:normal;font-size:17px}
+.fix p{flex:1;font-size:13.5px;color:var(--tx2);line-height:1.55;background:var(--surf2);border-radius:10px;padding:9px 11px}
+.fix p mark{background:var(--tint2);color:var(--tx);border-radius:4px;padding:0 3px;font-weight:600}
+.fix .btn{align-self:flex-start;min-height:40px;font-size:13px;border-radius:11px}
+.loop{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:700;color:var(--tx2)}
+.loop span{padding:5px 12px;border-radius:999px;background:var(--bg2)}
+.loop i{font-style:normal;color:var(--tx3)}
+
+/* ── 함께 연습 ── */
+.practice{border:1.5px solid transparent;background:linear-gradient(var(--surf),var(--surf)) padding-box,linear-gradient(120deg,var(--c-game),var(--acc)) border-box;padding:15px var(--sp5)}
+.pr-idle{display:flex;align-items:center;gap:var(--sp4)}
+.pr-ic{flex:none;width:52px;height:52px;border-radius:16px;background:var(--t-game);display:grid;place-items:center;font-size:27px}
+.pr-tx{flex:1;min-width:0}
+.pr-badge{display:inline-block;font-size:11px;font-weight:800;color:var(--pink-tx);background:var(--pink);padding:2px 9px;border-radius:999px;margin-bottom:4px}
+.pr-tx h3{font-size:17px;font-weight:800}
+.pr-tx p{font-size:13.5px;color:var(--tx2);margin-top:2px}
+.pr-idle .btn.pri{min-height:46px;flex:none;font-size:14.5px}
+.practice.on{position:sticky;top:calc(var(--h-top) + var(--h-tabs) + 10px);z-index:20;box-shadow:var(--sh3)}
+.practice.on::before{content:"";position:absolute;left:-3px;right:-3px;top:-13px;height:12px;background:var(--bg)}
+.pr-run{display:grid;gap:10px}
+.pr-steps{list-style:none;margin:0;padding:0;display:flex;gap:6px}
+.pr-steps li{flex:1;min-width:0}
+.pr-steps button{width:100%;display:flex;align-items:center;gap:6px;justify-content:center;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);font-size:12.5px;font-weight:700;color:var(--tx3)}
+.pr-steps button i{font-style:normal;flex:none;width:18px;height:18px;border-radius:50%;background:var(--surf);display:grid;place-items:center;font-size:10.5px}
+.pr-steps button.done{color:var(--ok-ink);border-color:transparent;background:var(--tint)}
+.pr-steps button.done i{background:var(--ok);color:var(--on-ok)}
+.pr-steps button[aria-current="step"]{background:var(--acc-fill);border-color:var(--acc-fill);color:#fff}
+.pr-steps button[aria-current="step"] i{background:rgba(255,255,255,.25);color:#fff}
+.pr-say b{font-family:var(--font-t);font-size:15.5px;display:block}
+.pr-say p{font-size:13.5px;color:var(--tx2);margin-top:2px}
+.pr-say .eg{margin-top:7px;font-size:13px;line-height:1.5;background:var(--surf2);border:1px dashed var(--line2);border-radius:10px;padding:7px 11px;color:var(--tx)}
+.pr-say .eg em{font-style:normal;font-weight:800;color:var(--c-game);margin-right:7px}
+.pr-btns{display:flex;gap:8px;flex-wrap:wrap}
+.pr-btns .btn{min-height:40px;font-size:13.5px}
+.pr-btns .btn.pri{min-height:40px;font-size:14px;box-shadow:none}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--tx3);margin-left:auto}
+.btn.ghost:hover{background:var(--bg2);border-color:transparent;color:var(--tx)}
+.card.spot{border-color:var(--c-game);box-shadow:0 0 0 4px var(--t-game),var(--sh2)}
+@media(max-width:760px){
+  .pr-idle{flex-wrap:wrap} .pr-idle .btn.pri{width:100%}
+  .practice.on{padding:10px 12px;top:calc(var(--h-top) + var(--h-tabs) + 6px)}
+  .practice.on::before{top:-9px;height:8px}
+  .practice.on .pr-run{gap:7px}
+  .pr-steps button{min-height:36px} .pr-steps button span{display:none}
+  .pr-steps button[aria-current="step"] span{display:inline}
+  .pr-say b{font-size:14px} .pr-say p{display:none} .pr-say .eg{margin-top:5px;font-size:12.5px;padding:6px 9px}
+  .pr-btns .btn{min-height:38px;padding:0 11px;font-size:13px}
+}
+
+/* ── 아래 막대(좁은 화면) · 알림 · 바닥글 ── */
+.dock{display:none;position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb,var(--surf) 94%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--line);gap:8px}
+.dock .btn.pri{flex:1;min-width:0;min-height:48px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock .btn{flex:none}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);background:var(--tx);color:var(--bg);padding:11px 20px;border-radius:999px;
+  font-size:14px;font-weight:600;box-shadow:var(--sh3);z-index:80;opacity:0;pointer-events:none;transition:var(--dur) var(--ease);max-width:min(92vw,540px);text-align:center}
+.toast.in{opacity:1;transform:translate(-50%,0)}
+footer{max-width:1400px;margin:0 auto;padding:var(--sp6) var(--sp5) var(--sp8);border-top:1px solid var(--line);color:var(--tx3);font-size:12.5px;line-height:1.85}
+footer b{color:var(--tx2)}
+footer a{color:var(--tx2);text-decoration:none}
+footer a:hover{color:var(--acc);text-decoration:underline}
+
+/* ── 반응형 ── */
+@media(max-width:1180px){.flow{display:none}}
+@media(max-width:1080px){
+  .wrap{grid-template-columns:minmax(0,1fr)}
+  .side{position:static}
+  .panel{max-height:none}
+  .p-body{max-height:360px}
+  .dock{display:flex}
+  body{padding-bottom:76px}
+  .toast{bottom:92px}
+}
+@media(max-width:760px){
+  :root{--h-tabs:60px}
+  .top{padding:0 var(--sp3)} .page{padding:var(--sp3) var(--sp3) var(--sp7)} .hero-in{padding:16px var(--sp3) 18px} .tabs-in{padding:8px var(--sp3);gap:6px}
+  .tab{height:44px;padding:6px 8px 6px 6px;gap:7px;border-radius:12px}
+  .tab i{width:28px;height:28px;border-radius:9px;font-size:13px}
+  .tab b{font-size:13.5px} .tab small{display:none} .tab b .lg{display:none} .tab b .sm{display:inline}
+  .tab{justify-content:center}
+  .lead{font-size:13.5px}
+  .card{padding:var(--sp4);border-radius:16px}
+  .sitebar{grid-template-columns:minmax(0,1fr);padding:var(--sp4)}
+  .grid2,.fixes,.promise{grid-template-columns:minmax(0,1fr)}
+  .grid3.types{grid-template-columns:minmax(0,1fr)}
+  .tcard{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:11px}
+  .tcard .ti{margin:0} .tcard p,.tcard small{flex-basis:100%}
+  .judge,.legend{grid-template-columns:minmax(0,1fr)}
+  .split{grid-template-columns:minmax(0,1fr)}
+  .ch .sub{display:none}
+}
+@media(max-width:430px){
+  .htitle{font-size:14px} .htitle b{display:none}
+  .ggrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .gcard{min-height:112px;padding:11px}
+  .aib{height:44px;padding:0 11px 0 7px;font-size:13.5px}
+  .grid3.lays{gap:8px} .lay{padding:7px} .lay small{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v6L4 18a3 3 0 0 0 2.6 4.5h10.8A3 3 0 0 0 20 18l-5-9V3"/><path d="M7.5 14h9"/></svg>송쌤과학</span>
+  <span class="htitle">가상실험실 만들기 <b>학생용</b></span>
+  <span class="sp"></span>
+  <button class="ico" id="btnTheme" type="button" aria-label="화면 테마 바꾸기"><svg viewBox="0 0 24 24" id="icTheme" aria-hidden="true"></svg></button>
+</header>
+
+<section class="hero" aria-label="소개">
+  <div class="hero-in">
+    <div>
+      <p class="eyebrow">VIBE CODING · 말로 설명해서 만들기</p>
+      <h1>프롬프트 한 장으로 만드는 <em>나만의 과학 가상실험실</em></h1>
+      <p class="lead">고르고, 채우고, 복사해서 AI에게 붙여 넣으면 돼요. 처음이라면 게임부터 만들어 봐요.</p>
+    </div>
+    <div class="flow" aria-hidden="true"><span>계획 세우기</span><i>→</i><span>일단 만들기</span><i>→</i><span>계속 고치기</span></div>
+  </div>
+</section>
+
+<nav class="tabs" aria-label="단계">
+  <div class="tabs-in" role="tablist">
+    <button class="tab" type="button" role="tab" data-v="game" id="tab-game" aria-controls="v-game"><i>1</i><span><b><span class="lg">게임으로 몸풀기</span><span class="sm">게임</span></b><small>프롬프트 골라 바로 만들기</small></span></button>
+    <button class="tab" type="button" role="tab" data-v="lab" id="tab-lab" aria-controls="v-lab"><i>2</i><span><b><span class="lg">실험실 계획 세우기</span><span class="sm">계획</span></b><small>탐구형 · 실험형 · 게임형</small></span></button>
+    <button class="tab" type="button" role="tab" data-v="fix" id="tab-fix" aria-controls="v-fix"><i>3</i><span><b><span class="lg">만들고 고치기</span><span class="sm">고치기</span></b><small>실행하고 다듬기</small></span></button>
+  </div>
+</nav>
+
+<div class="page">
+  <!-- AI 고르기 -->
+  <section class="card sitebar" aria-label="AI 고르기">
+    <div class="q">어느 AI에 붙여 넣나요?<small>고른 곳에 맞게 프롬프트가 바뀌어요</small></div>
+    <div class="ais" id="ais"></div>
+    <div class="ainote" id="aiNote" aria-live="polite"></div>
+  </section>
+
+  <div class="wrap">
+    <main>
+      <!-- ① 게임 -->
+      <section id="v-game" role="tabpanel" aria-labelledby="tab-game">
+        <div class="intro"><h2>만들 게임을 골라요</h2><p>고르면 오른쪽에 프롬프트가 나와요. 복사해서 AI에게 붙여 넣으면 게임이 만들어져요.</p></div>
+        <div class="ggrid" id="gameGrid"></div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="ch"><span class="n">+</span><h3>내 아이디어 한 줄 더하기</h3><span class="sub">선택 · 안 써도 돼요</span></div>
+          <input class="in" id="gIdea" maxlength="60" placeholder="예) 뱀을 초록 용으로 바꾸고 배경은 밤하늘로" aria-label="내 아이디어 한 줄">
+          <div class="chips" id="ideaChips" style="margin-top:9px"></div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><span class="n">?</span><h3>프롬프트는 이렇게 읽어요</h3><span class="sub">좋은 프롬프트 = 분명하게 · 자세하게 · 상황을 담아서</span></div>
+          <div class="legend">
+            <div><b>[역할]</b>AI에게 맡길 일을 정해 줘요</div>
+            <div><b>[목표]</b>무엇을 만들지 한 줄로 말해요</div>
+            <div><b>[규칙]</b>어떻게 작동할지 하나씩 적어요</div>
+            <div><b>[화면]</b>어디에 무엇이 보일지 정해요</div>
+            <div><b>[확인 조건]</b>꼭 지켜야 할 약속이에요</div>
+            <div><b>[결과물]</b>어떻게 받을지 — AI마다 달라요</div>
+          </div>
+          <p class="help">‘자세히’에 나오는 localStorage(기록 저장), Web Audio(효과음), Canvas(그림판) 같은 낯선 말은 AI에게 하는 기술 주문이에요. 궁금하면 AI에게 “이 말이 무슨 뜻이야?” 하고 물어봐요.</p>
+        </div>
+      </section>
+
+      <!-- ② 실험실 계획 -->
+      <section id="v-lab" role="tabpanel" aria-labelledby="tab-lab" hidden>
+        <div class="card practice" id="prac">
+          <div class="pr-idle" id="pracIdle">
+            <span class="pr-ic" aria-hidden="true">⚗️</span>
+            <div class="pr-tx">
+              <span class="pr-badge">함께 연습</span>
+              <h3>주기율표 게임으로 따라 해 보기</h3>
+              <p>계획 → 설계 → 방향 → 규칙 → 초안. 예시를 한 단계씩 채우며 연습해요.</p>
+            </div>
+            <button class="btn pri" type="button" id="pracStart">연습 시작하기</button>
+          </div>
+          <div class="pr-run" id="pracRun" hidden>
+            <ol class="pr-steps" id="pracSteps"></ol>
+            <div class="pr-say" id="pracSay" aria-live="polite"></div>
+            <div class="pr-btns">
+              <button class="btn" type="button" id="pracFill">예시 채우기</button>
+              <button class="btn pri" type="button" id="pracNext">다음 단계</button>
+              <button class="btn ghost" type="button" id="pracEnd">연습 끝내기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="intro" style="margin-top:20px"><h2>어떤 실험실을 만들까요?</h2><p>유형을 고르고 네 가지를 차례로 정하면 초안 프롬프트가 완성돼요.</p></div>
+        <div class="grid3 types" id="typeGrid"></div>
+
+        <div class="card" id="c0" style="margin-top:16px;padding-top:14px;padding-bottom:14px">
+          <div class="lbl">예시로 시작하기 <small>눌러서 채운 뒤 내 것으로 고쳐요</small></div>
+          <div class="chips" id="presetChips"></div>
+        </div>
+
+        <div class="card" id="c1">
+          <div class="ch"><span class="n">1</span><h3>계획 — 무엇을, 왜 만들까요?</h3><span class="sub">한 문장으로 말할 수 있으면 충분해요</span></div>
+          <label class="fld"><span class="lbl">주제 <small>꼭 써요</small></span>
+            <input class="in" id="fTitle" maxlength="40" placeholder="예) 용수철에 매단 추의 무게와 늘어난 길이"></label>
+          <label class="fld"><span class="lbl" id="lblQ">알아보고 싶은 것 <small>탐구 질문</small></span>
+            <input class="in" id="fQ" maxlength="80" placeholder=""></label>
+        </div>
+
+        <div class="card" id="c2">
+          <div class="ch"><span class="n">2</span><h3>설계 — 꼭 있어야 하는 것</h3><span class="sub">비워 두면 AI가 교과서 수준으로 정해요</span></div>
+          <div id="typeFields"></div>
+          <div class="fld">
+            <div class="lbl">있으면 좋은 것 <small id="exHelp">3개까지 · 많을수록 코드가 길어져요</small></div>
+            <div class="chips" id="extraChips"></div>
+          </div>
+        </div>
+
+        <div class="card" id="c3">
+          <div class="ch"><span class="n">3</span><h3>방향 — 화면과 분위기</h3><span class="sub">전체 느낌을 정해요</span></div>
+          <div class="lbl">화면 밑그림</div>
+          <div class="grid3 lays" id="layGrid"></div>
+          <div class="fld">
+            <div class="lbl">분위기</div>
+            <div class="chips" id="moodChips"></div>
+          </div>
+        </div>
+
+        <div class="card" id="c4">
+          <div class="ch"><span class="n">4</span><h3>규칙 — AI와의 약속</h3><span class="sub">아래 약속은 프롬프트에 자동으로 들어가요</span></div>
+          <ul class="promise" id="promise"></ul>
+          <label class="fld"><span class="lbl">내가 더하는 규칙 <small>선택</small></span>
+            <input class="in" id="fRule" maxlength="60" placeholder="예) 원소 이름은 교과서 표기로 쓰기"></label>
+          <div class="split">
+            <div>
+              <div class="lbl">만드는 방법</div>
+              <div class="chips" id="modeChips"></div>
+              <p class="help" id="modeHelp"></p>
+            </div>
+            <button class="btn pri" type="button" id="btnDraft">초안 프롬프트 보기</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 만들고 고치기 -->
+      <section id="v-fix" role="tabpanel" aria-labelledby="tab-fix" hidden>
+        <div class="intro"><h2>만든 뒤가 진짜 시작이에요</h2><p>한 번에 완벽하게 나오지 않아요. 실행해 보고, 살펴보고, 한 가지씩 고쳐요.</p></div>
+
+        <div class="card">
+          <div class="ch"><span class="n">1</span><h3 id="runTitle">실행하는 법</h3></div>
+          <ol class="steps" id="runSteps"></ol>
+          <p class="help" style="margin-top:12px">메모장이 없는 기기(크롬북·아이패드)에서는 만든 것을 바로 실행해 주는 AI를 쓰거나 선생님께 물어봐요.</p>
+        </div>
+
+        <div class="card">
+          <div class="ch"><span class="n">2</span><h3>AI가 만든 것, 내가 판단해요</h3><span class="sub">주인공은 나, AI는 도와주는 짝꿍</span></div>
+          <div class="judge">
+            <div><b><i>✓</i>받아들이기</b><p>부탁한 대로 작동하고 과학 내용도 맞을 때</p></div>
+            <div><b><i>✕</i>거절하기</b><p>부탁과 다른 것을 만들었거나 내용이 틀렸을 때</p></div>
+            <div><b><i>↻</i>고쳐서 쓰기</b><p>대체로 맞지만 다듬을 곳이 있을 때</p></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><span class="n">3</span><h3>고쳐 달라고 말하기</h3><span class="sub">한 번에 한 가지씩 · <mark style="background:var(--tint2);color:inherit;border-radius:4px;padding:0 4px">색칠한 곳</mark>은 내 말로 바꿔요</span></div>
+          <div class="fixes" id="fixes"></div>
+          <div class="loop" style="margin-top:16px" aria-label="되풀이하는 순서"><span>① 프롬프트</span><i>→</i><span>② AI 제안</span><i>→</i><span>③ 살펴보기</span><i>→</i><span>④ 다듬기</span><i>→</i><span>⑤ 다시 ①로</span></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 내 프롬프트 -->
+    <aside class="side" id="side" aria-label="내 프롬프트">
+      <div class="panel">
+        <div class="p-head"><h2>내 프롬프트</h2><span class="src" id="srcTag"></span></div>
+        <div class="p-opt">
+          <div class="seg2" id="lvl" role="group" aria-label="프롬프트 길이">
+            <button type="button" data-l="short">짧게<small id="recS"></small></button>
+            <button type="button" data-l="long">자세히<small id="recL"></small></button>
+          </div>
+          <div class="meter" id="meter"><div class="bar"><i id="mBar"></i></div><b id="mTxt"></b></div>
+          <div class="over-msg" id="overMsg" hidden><span id="overTxt"></span><button type="button" id="btnShort">짧게로 바꾸기</button></div>
+        </div>
+        <div class="p-body" id="pBody" tabindex="0" aria-label="프롬프트 미리보기"><div class="pv" id="prev"></div></div>
+        <div class="p-act">
+          <button class="btn pri" type="button" id="btnGo"></button>
+          <div class="row2">
+            <button class="btn" type="button" id="btnCopy"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>복사</button>
+            <button class="btn" type="button" id="btnTxt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>txt 저장</button>
+          </div>
+          <button class="p-foot" type="button" id="goFix">붙여 넣은 다음엔? <u>실행하고 고치는 법 보기</u></button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="dock" id="dock">
+  <button class="btn pri" type="button" id="dockGo"></button>
+  <button class="btn" type="button" id="dockTxt" aria-label="txt 파일로 저장"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>txt</button>
+  <button class="btn" type="button" id="dockView">보기</button>
+</div>
+
+<footer>
+  <b>송쌤과학 가상실험실 만들기 (학생용)</b><br>
+  AI가 만든 결과는 초안이에요. 과학 내용이 맞는지 교과서와 견주어 확인하고, 선생님과 함께 다듬어요.<br>
+  나이 제한이 있는 AI는 선생님 안내에 따라 써요. 입력한 내용은 이 브라우저에만 저장되고 어디로도 보내지 않아요.<br>
+  ⓒ 2026 송쌤과학 · <a href="https://www.youtube.com/@songsamscience" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">YouTube @songsamscience</a>
+  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">Instagram @songsamscience</a> · v1.0 · 2026-11-11
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const GAMES=[
+{id:'snake',
+ name:'뱀꼬리 게임',
+ icon:'🐍',
+ kind:'방향키 조종',
+ one:'먹이를 먹을수록 꼬리가 길어져요',
+ file:'송쌤과학_뱀꼬리_게임',
+ src:'원본',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 뱀꼬리 게임’ 만들기',
+ basic:{
+  rules:[
+   '시작: 아무 방향키나 누르면 게임 시작',
+   '조작: 방향키로 뱀 이동',
+   '먹이: 먹으면 꼬리 1칸 늘어남, 점수 10점 올라감',
+   '게임 오버: 벽이나 자기 몸에 부딪히면 끝',
+   '처음 속도: 천천히(0.15초에 1칸)'
+  ],
+  screen:[
+   '가운데: 20×20칸 게임판',
+   '위쪽: 점수 표시',
+   '게임 오버 때: ‘다시 시작’ 버튼 표시'
+  ]
+ },
+ full:{
+  rules:[
+   '게임판: Canvas 20×20칸, 귀여운 뱀과 먹이를 선명하게 그리기',
+   '먹이: 뱀이 없는 빈칸에 무작위로 하나씩 생성',
+   '먹기: 몸 1칸 늘어남, 점수 10점 올라감',
+   '성공: 모든 칸을 채우면 즉시 성공',
+   '게임 오버: 벽이나 자기 몸에 부딪히면 끝',
+   '꼬리 칸: 먹이를 안 먹어 꼬리가 비워지는 칸으로 가면 충돌 아님',
+   '난이도: 쉬움·보통·어려움 = 1칸 이동 간격 180·120·80ms, 시작 전 선택',
+   '기록: 난이도별 최고 점수를 localStorage에 저장'
+  ],
+  controls:[
+   'PC: 방향키·WASD로 방향 바꾸기',
+   '모바일: 화면 아래 터치 방향 버튼',
+   '방향 전환: 한 번 이동할 때 한 번만 적용, 정반대로 바로 꺾기 막기'
+  ],
+  screen:[
+   '위쪽: 점수·난이도·난이도별 최고 점수 표시',
+   '시작 화면: 난이도 선택과 한 줄 조작 안내',
+   '버튼: 시작·일시정지·계속하기·다시 시작·음소거, 누르기 쉬운 크기',
+   '효과음: 먹기·실패·성공 소리(Web Audio API), 첫 조작 뒤 재생',
+   '결과 화면: 최종 점수·최고 기록·재도전 버튼'
+  ],
+  checks:[
+   '화면을 벗어나면 자동 일시정지, 게임 중 방향키·터치로 페이지 스크롤 막기',
+   '다시 시작·난이도 변경 때 뱀·점수·방향 모두 초기화, 타이머 중복 막기',
+   '빠른 연속 입력·충돌·꼬리 칸 이동·성공 판정이 맞는지 확인',
+   '저장이 막힌 환경에서도 게임은 그대로 작동',
+   'PC·태블릿·스마트폰 비율에 맞게 게임판과 방향 버튼 크기 조정'
+  ]
+ }
+},
+{id:'train',
+ name:'기차 꼬리 잇기',
+ icon:'🚂',
+ kind:'방향키 조종',
+ one:'승객을 태울수록 객차가 늘어나요',
+ file:'송쌤과학_기차_꼬리_잇기',
+ src:'원본',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 기차 꼬리 잇기’ 만들기',
+ basic:{
+  rules:[
+   '시작: 아무 방향키나 누르면 게임 시작',
+   '조작: 방향키로 기관차 방향 바꾸기, 기차는 한 칸씩 계속 전진',
+   '승객: 태우면 객차 1칸 늘어남, 점수 10점 올라감',
+   '게임 오버: 벽이나 자기 객차에 닿으면 끝',
+   '처음 속도: 천천히(0.2초에 1칸)'
+  ],
+  screen:[
+   '가운데: 20×20칸 게임판, 기관차는 앞쪽 방향이 보이게',
+   '위쪽: 점수·태운 승객 수 표시',
+   '게임 오버 때: ‘다시 시작’ 버튼 표시'
+  ]
+ },
+ full:{
+  rules:[
+   '게임판: Canvas 20×20칸, 방향이 보이는 기관차·객차·승객 직접 그리기',
+   '승객: 기차가 없는 빈칸에 무작위로 한 명씩 생성',
+   '태우기: 객차 1칸 늘어남, 점수 10점 올라감',
+   '성공: 더 이상 빈칸이 없으면 즉시 성공',
+   '게임 오버: 기관차가 벽이나 자기 객차에 닿으면 끝',
+   '꼬리 칸: 승객을 안 태워 마지막 객차가 비우는 칸으로 가면 충돌 아님',
+   '속도: 느림·보통·빠름 = 1칸 이동 간격 200·140·90ms, 시작 전 선택',
+   '기록: 속도별 최고 점수를 localStorage에 저장'
+  ],
+  controls:[
+   'PC: 방향키·WASD로 방향 바꾸기',
+   '모바일: 화면 아래 터치 방향 버튼',
+   '방향 전환: 한 번 이동할 때 한 번만 적용, 정반대로 바로 꺾기 막기'
+  ],
+  screen:[
+   '위쪽: 점수·태운 승객 수·객차 수·속도·속도별 최고 점수',
+   '시작 화면: 속도 선택과 한 줄 조작 안내, 선명한 색과 충분한 대비',
+   '버튼: 시작·일시정지·계속하기·다시 시작·음소거, 누르기 쉬운 크기',
+   '효과음: 탑승·충돌·성공 소리(Web Audio API), 첫 조작 뒤 재생',
+   '결과 화면: 성공 여부·최종 점수·태운 승객 수·재도전 버튼'
+  ],
+  checks:[
+   '화면을 벗어나면 자동 일시정지, 게임 중 방향키·터치로 페이지 스크롤 막기',
+   '승객 생성·객차 증가·충돌·연속 입력·성공 판정이 맞는지 확인',
+   '다시 시작 때 기차·점수·방향 모두 초기화, 타이머 중복 막기',
+   '저장이 막힌 환경에서도 게임은 계속',
+   '스마트폰에서 방향 버튼이 잘 눌리는지 확인'
+  ]
+ }
+},
+{id:'maze',
+ name:'정답 먹기 미로',
+ icon:'🧩',
+ kind:'방향키 미로',
+ one:'미로 속 정답을 찾아 먹어요',
+ file:'송쌤과학_정답_먹기_미로',
+ src:'원본',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 정답 먹기 미로’ 만들기',
+ basic:{
+  rules:[
+   '문제: 중학교 수준 기초 과학 객관식 10개, 보기 3개 중 정답은 하나뿐',
+   '조작: 방향키로 플레이어 이동, 벽은 통과 못 함',
+   '아이템: 보기 번호 1~3이 미로에 놓임, 정답을 먹으면 10점·다음 문제',
+   '오답: 먹으면 생명 1개 줄고 같은 문제 다시',
+   '끝: 10문제를 모두 풀면 성공, 생명 3개를 다 잃으면 게임 오버'
+  ],
+  screen:[
+   '가운데: 모든 길이 이어진 미로',
+   '위쪽: 현재 문제와 번호별 보기 내용',
+   '오른쪽 위: 점수·남은 생명·문항/10 표시',
+   '끝났을 때: 최종 점수와 ‘다시 시작’ 버튼'
+  ]
+ },
+ full:{
+  rules:[
+   '문항: 중학교 수준 기초 과학 객관식 10개, 서로 다른 보기 3개·정답 1개·짧은 해설, 정답은 하나뿐',
+   '문항 편집: 시작 화면에서 선생님이나 내가 수정·저장·기본값 복원, 빈 칸·중복 보기·정답 누락 검사',
+   '미로: Canvas로 모든 통로 연결, 플레이어·추격자 1명·보기 1~3을 겹치지 않는 갈 수 있는 칸에',
+   '추격자: 플레이어보다 느리게 통로 따라 추적, 시작·부활 위치는 충분히 멀리',
+   '정답: 문항당 한 번만 10점, 해설을 닫으면 다음 문항 아이템 새로 배치',
+   '오답: 그 아이템 없애고 생명 1개 줄임, 해설 닫으면 남은 아이템으로 재도전',
+   '해설 창: 정답·오답 모두 표시, 그동안 플레이어·추격자·시간 완전히 멈춤',
+   '생명: 3개, 추격자에 닿으면 1개 줄고 안전한 칸으로, 1.5초 무적, 0개면 바로 끝'
+  ],
+  controls:[
+   'PC: 방향키·WASD로 이동',
+   '모바일: 터치 방향 버튼'
+  ],
+  screen:[
+   '위쪽: 현재 문제·번호별 보기, 점수·남은 생명·문항/10·풀이 시간',
+   '버튼: 시작·일시정지·계속하기·재시작·음소거, 누르기 쉬운 크기',
+   '결과 화면: 최종 점수·완료 문항 수·문항별 정답과 해설·재도전 버튼'
+  ],
+  checks:[
+   '화면을 벗어나면 자동 일시정지, 게임 영역 터치 스크롤 막기, 효과음은 첫 조작 뒤',
+   '편집한 문항이 게임에 반영되고 저장 실패 때 안내 표시',
+   '모든 아이템에 실제로 갈 수 있는지, 해설 중 완전히 멈추는지 확인',
+   '같은 순간 중복 피해·중복 채점 막기',
+   '재시작 때 점수·생명·문항·시간 모두 초기화, 타이머 중복 막기'
+  ]
+ }
+},
+{id:'brick',
+ name:'벽돌깨기',
+ icon:'🧱',
+ kind:'막대 조종',
+ one:'공을 튕겨 벽돌을 모두 깨요',
+ file:'송쌤과학_벽돌깨기',
+ src:'원본',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 벽돌깨기’ 만들기',
+ basic:{
+  rules:[
+   '시작: 스페이스 키로 막대 위의 공 발사',
+   '조작: 좌우 방향키로 막대 이동',
+   '벽돌: 공에 한 번 맞으면 사라짐, 1개당 10점',
+   '생명: 3개, 공이 바닥으로 떨어지면 1개 줄고 다시 발사',
+   '끝: 생명이 0개면 게임 오버, 벽돌을 다 깨면 성공'
+  ],
+  screen:[
+   '가운데: 위쪽에 벽돌 여러 줄, 아래쪽에 막대와 공',
+   '위쪽: 점수·남은 생명 표시',
+   '끝났을 때: 결과와 ‘다시 시작’ 버튼 표시'
+  ]
+ },
+ full:{
+  rules:[
+   '그림: Canvas에 벽돌·공·막대를 선명하게, 게임판 비율 유지',
+   '발사: 시작·생명 감소 뒤 공은 막대 위 대기, ‘공 발사’ 버튼·스페이스로 발사',
+   '반사: 막대의 맞은 위치에 따라 각도 변화, 수평으로만 움직이지 않기',
+   '벽돌: 한 번 맞으면 사라짐, 1개당 10점 한 번만, 모서리 중복 득점 막기',
+   '고속 충돌: 잘게 나눈 이동이나 연속 충돌 판정으로 벽돌·막대 통과 막기',
+   '생명: 3개, 공이 바닥 아래로 완전히 떨어지면 1개만 줄고 벽돌·점수 유지',
+   '단계: 총 5단계, 배치·공 속도 점점 어렵게(최대 속도 제한), 완료 안내 뒤 발사 대기',
+   '끝: 생명 0개면 게임 오버, 5단계를 모두 마치면 최종 성공'
+  ],
+  controls:[
+   'PC: 좌우 방향키·A/D·마우스 이동, 스페이스로 발사',
+   '모바일: 드래그로 이동, 화면 크기에 맞게 좌표 변환, 막대는 판 밖으로 안 나감'
+  ],
+  screen:[
+   '위쪽: 점수·남은 생명·현재 단계·최고 점수, 한 줄 조작 안내',
+   '버튼: 시작·일시정지·계속하기·재시작·음소거·공 발사, 누르기 쉬운 크기',
+   '효과음: 타격·실패·단계 완료 소리, 첫 조작 뒤 재생',
+   '결과 화면: 최종 점수·도달 단계·최고 기록·재도전 버튼'
+  ],
+  checks:[
+   'requestAnimationFrame과 경과 시간 기반 이동 사용',
+   '화면을 벗어나면 자동 일시정지, 게임 영역 터치 스크롤 막기',
+   '고속 충돌·생명 차감·단계 전환·최종 성공·화면 크기 변경 확인',
+   '재시작 때 상태 모두 초기화, 게임 루프 중복 실행 막기',
+   '최고 점수는 localStorage에 저장, 저장이 막혀도 게임은 계속'
+  ]
+ }
+},
+{id:'space',
+ name:'우주선 운석 피하기',
+ icon:'🚀',
+ kind:'자유 이동',
+ one:'운석을 피하며 별을 모아요',
+ file:'송쌤과학_우주선_운석_피하기',
+ src:'원본',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 우주선 운석 피하기’ 만들기',
+ basic:{
+  rules:[
+   '시작: 아무 방향키나 누르면 게임 시작',
+   '조작: 방향키로 우주선 상하좌우 이동, 화면 밖으로 못 나감',
+   '운석: 위쪽 무작위 위치에서 떨어짐, 시간이 갈수록 빨라짐',
+   '점수: 버틴 1초당 1점, 별을 먹으면 10점',
+   '생명: 3개, 운석에 부딪히면 1개 줄고 0개면 끝'
+  ],
+  screen:[
+   '가운데: 검은 우주 배경 게임판',
+   '위쪽: 점수·생명·생존 시간 표시',
+   '끝났을 때: 최종 점수와 ‘다시 시작’ 버튼'
+  ]
+ },
+ full:{
+  rules:[
+   '그림: Canvas에 별이 흐르는 우주 배경·우주선·운석·수집용 별 직접 그리기',
+   '운석: 위쪽 무작위 위치에서 여러 크기로 낙하',
+   '난이도: 15초마다 낙하 속도·생성 빈도 올림, 최대 속도·개수 제한으로 피할 수 있게',
+   '별: 일정 간격으로 생성, 운석과 모양·색 모두 다르게',
+   '점수: 생존 1초당 1점, 별 1개당 10점',
+   '생명: 3개, 운석 충돌 때 1개 감소, 피격 뒤 1.5초 깜빡이는 무적, 0개면 끝',
+   '기록: 최고 점수를 localStorage에 저장'
+  ],
+  controls:[
+   'PC: 방향키·WASD로 상하좌우 이동, 대각선 속도도 같게',
+   '모바일: 드래그로 이동, 드래그 시작 때 갑자기 튀지 않기, 화면 밖으로 못 나감'
+  ],
+  screen:[
+   '정보창: 생존 시간·현재 점수·최고 점수·생명 실시간 표시',
+   '시작 화면: 한 줄 조작 안내와 시작 버튼',
+   '버튼: 시작·일시정지·계속하기·재시작·음소거, 누르기 쉬운 크기',
+   '효과: 수집·피격·종료 효과음(첫 조작 뒤), 과하지 않은 시각 효과',
+   '종료 화면: 최종 점수·생존 시간·최고 기록·재도전 버튼'
+  ],
+  checks:[
+   'requestAnimationFrame과 경과 시간 기반 이동 사용',
+   '화면을 벗어나면 자동 일시정지, 게임 영역 터치 스크롤 막기',
+   '우주선·운석 충돌 판정이 보이는 그림과 맞는지 확인',
+   '재시작 때 운석·점수·생명·시간 초기화, 게임 루프 중복 실행 막기',
+   '저장이 막혀도 게임은 계속'
+  ]
+ }
+},
+{id:'element',
+ name:'주기율표 퀴즈',
+ icon:'⚗️',
+ kind:'객관식 누르기',
+ one:'원소 기호를 보고 이름을 맞혀요',
+ file:'송쌤과학_주기율표_퀴즈',
+ src:'원본',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 주기율표 퀴즈’ 만들기',
+ basic:{
+  rules:[
+   '문제: 원자 번호 1~30번 원소 하나의 번호와 기호를 크게 표시',
+   '보기: 한국어 원소 이름 3개(정답 1개+다른 원소 2개), 순서 섞기',
+   '채점: 맞히면 1점, 틀리면 정답을 보여 주고 다음 문제',
+   '시간: ‘시작’ 버튼을 누르면 3분, 0초에 끝',
+   '이름 표기: 플루오린·나트륨·칼륨·타이타늄·크로뮴·망가니즈'
+  ],
+  screen:[
+   '가운데: 원자 번호와 원소 기호를 크게 쓴 문제 카드',
+   '아래: 마우스·터치로 누르는 큰 보기 버튼 3개',
+   '위쪽: 남은 시간·점수, 끝나면 최종 점수와 ‘다시 도전’ 버튼'
+  ]
+ },
+ full:{
+  rules:[
+   '원소: 1 H 수소, 2 He 헬륨, 3 Li 리튬, 4 Be 베릴륨, 5 B 붕소, 6 C 탄소, 7 N 질소, 8 O 산소, 9 F 플루오린, 10 Ne 네온, 11 Na 나트륨, 12 Mg 마그네슘, 13 Al 알루미늄, 14 Si 규소, 15 P 인, 16 S 황, 17 Cl 염소, 18 Ar 아르곤, 19 K 칼륨, 20 Ca 칼슘, 21 Sc 스칸듐, 22 Ti 타이타늄, 23 V 바나듐, 24 Cr 크로뮴, 25 Mn 망가니즈, 26 Fe 철, 27 Co 코발트, 28 Ni 니켈, 29 Cu 구리, 30 Zn 아연',
+   '출제: 무작위 1개, 번호·기호 크게, 직전과 같은 원소 금지, 정답 공개 전 이름 노출 금지',
+   '보기: 정답 1개+나머지 29개 중 서로 다른 오답 2개, 매번 순서 섞기',
+   '채점: 첫 시도 정답 1점, 재도전 정답 0.5점, 두 번 오답 0점, 고른 오답 비활성화',
+   '정답 확인: 맞히기 전에 누르면 0점 확정·보기 잠금, 채점된 점수는 안 바뀜',
+   '전환: 정답이면 약 0.8초 정답·점수 표시 뒤 자동 다음, 두 번 틀리면 정답 확인이나 ‘다음 퀴즈’',
+   '넘기기: ‘다음 퀴즈’로 넘긴 미완료 문항은 0점, 문항별 점수는 한 번만',
+   '시간: 실제 경과 시간 기준 3분, 화면을 벗어나도 계속, 0초에 입력 중단·진행 중 문항 0점'
+  ],
+  controls:[
+   '마우스·터치: 큰 보기 버튼 누르기',
+   '키보드: 1·2·3 키로 보기 선택'
+  ],
+  screen:[
+   '카드 색: 1~9 파랑·10~19 초록·20~29 주황·30 보라, 범례·번호 함께',
+   '위쪽: 남은 시간·누적 점수, ‘정답 확인’·‘다음 퀴즈’ 버튼',
+   '결과: 최종 점수(첫 시도 정답 수×1+재도전 정답 수×0.5)·각 정답 수·0점 문항 수'
+  ],
+  checks:[
+   '정답 공개 뒤 점수 차단·재도전 채점이 맞는지 확인',
+   '중복 클릭·예약된 자동 전환으로 문제가 두 번 넘어가지 않게',
+   '0초에 모든 입력과 자동 전환 중단',
+   '‘다시 도전’ 때 점수·타이머·문항 상태 모두 초기화',
+   '스마트폰에서 보기 버튼이 잘 눌리는지 확인'
+  ]
+ }
+},
+{id:'mole',
+ name:'두더지 잡기',
+ icon:'🔨',
+ kind:'터치 누르기',
+ one:'튀어나온 두더지를 빨리 눌러요',
+ file:'송쌤과학_두더지_잡기',
+ src:'추가',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 두더지 잡기’ 만들기',
+ basic:{
+  rules:[
+   '시작: ‘시작’ 버튼을 누르면 30초 게임 시작',
+   '두더지: 구멍 9개 중 한 곳에서 무작위로 나와 약 1초 뒤 들어감',
+   '잡기: 나온 두더지를 마우스·터치로 누르면 10점',
+   '헛손질: 빈 구멍을 누르면 점수 변화 없음',
+   '끝: 30초가 지나면 게임 끝'
+  ],
+  screen:[
+   '가운데: 3×3 구멍 9개, 두더지는 CSS 도형으로 그리기',
+   '위쪽: 점수·남은 시간 표시',
+   '끝났을 때: 최종 점수와 ‘다시 시작’ 버튼'
+  ]
+ },
+ full:{
+  rules:[
+   '판: 3×3 구멍 9개, 두더지는 CSS·Canvas 도형으로 직접 그리기',
+   '등장: 무작위 구멍에서 나와 정해진 시간 뒤 들어감, 같은 구멍 연속 등장 피하기',
+   '시간: 30초, 실제 경과 시간 기준으로 줄이기',
+   '난이도: 10초마다 머무는 시간 짧게(1.0→0.8→0.6초), 동시에 최대 2마리',
+   '점수: 두더지 잡기 10점, 한 마리는 한 번만 점수',
+   '헛손질: 빈 구멍을 누르면 감점 없이 헛손질 횟수만 기록',
+   '기록: 최고 점수를 localStorage에 저장'
+  ],
+  controls:[
+   'PC: 마우스 클릭, 숫자 키 1~9로 구멍 누르기',
+   '모바일: 손가락 터치, 누르는 즉시 반응'
+  ],
+  screen:[
+   '위쪽: 점수·남은 시간·최고 점수',
+   '시작 화면: 한 줄 안내 ‘튀어나온 두더지를 눌러 잡으세요’',
+   '잡았을 때: 두더지 표정 바뀜·‘+10’ 글자, 효과음은 첫 조작 뒤',
+   '버튼: 시작·일시정지·다시 시작·음소거, 구멍과 버튼은 손가락 크기',
+   '결과 화면: 최종 점수·잡은 수·명중률·최고 기록·재도전 버튼'
+  ],
+  checks:[
+   '두더지가 들어가는 순간 눌러도 점수가 두 번 들어가지 않게',
+   '재시작 때 점수·시간·두더지 타이머 모두 초기화, 타이머 중복 막기',
+   '화면을 벗어나면 자동 일시정지',
+   '빠른 연속 터치 때 화면 확대·스크롤이 일어나지 않게 막기',
+   '저장이 막혀도 게임은 계속'
+  ]
+ }
+},
+{id:'cards',
+ name:'카드 짝 맞추기',
+ icon:'🃏',
+ kind:'카드 뒤집기',
+ one:'같은 그림 카드 두 장을 찾아요',
+ file:'송쌤과학_카드_짝_맞추기',
+ src:'추가',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 카드 짝 맞추기’ 만들기',
+ basic:{
+  rules:[
+   '시작: 카드 16장(그림 8종×2장)을 섞어 뒷면으로 놓기',
+   '뒤집기: 카드를 누르면 앞면 그림이 보임, 한 번에 2장까지',
+   '짝: 두 장 그림이 같으면 앞면 그대로, 다르면 1초 뒤 다시 뒷면',
+   '끝: 8쌍을 모두 찾으면 성공'
+  ],
+  screen:[
+   '가운데: 4×4 카드판, 그림은 이모지',
+   '위쪽: 뒤집은 횟수와 걸린 시간 표시',
+   '다 찾았을 때: 결과와 ‘다시 시작’ 버튼'
+  ]
+ },
+ full:{
+  rules:[
+   '카드: 이모지 그림 8종×2장=16장, 매 판 무작위로 섞기',
+   '뒤집기: 누르면 앞면, 한 번에 2장까지, 맞힌 카드·같은 카드 다시 누르기는 무시',
+   '짝 판정: 같으면 앞면 고정, 다르면 1초 보여 준 뒤 뒷면, 그동안 입력 잠금',
+   '횟수: 2장을 뒤집을 때마다 1회로 세기',
+   '시간: 첫 카드를 누른 순간부터 측정, 8쌍을 다 찾으면 멈춤',
+   '기록: 가장 적은 횟수·가장 빠른 시간을 localStorage에 저장'
+  ],
+  controls:[
+   '마우스·터치: 카드 누르기',
+   '키보드: 방향키로 카드 고르고 Enter·스페이스로 뒤집기'
+  ],
+  screen:[
+   '위쪽: 뒤집은 횟수·걸린 시간·최고 기록, 한 줄 안내',
+   '카드: 뒤집히는 움직임, 맞힌 카드는 테두리와 ✔ 표시로 구분',
+   '버튼: 다시 시작·음소거, 카드와 버튼은 손가락으로 누르기 쉬운 크기',
+   '결과 화면: 횟수·시간·새 기록 여부·재도전 버튼'
+  ],
+  checks:[
+   '빠르게 3장 이상 누르거나 같은 카드를 두 번 눌러도 판정이 꼬이지 않게',
+   '재시작 때 섞기·횟수·시간·잠금 상태 모두 초기화, 타이머 중복 막기',
+   '화면을 벗어나면 시간 측정 일시정지',
+   '화면 크기에 따라 카드 16장이 한 화면에 모두 보이게',
+   '저장이 막혀도 게임은 계속'
+  ]
+ }
+},
+{id:'jump',
+ name:'점프 달리기',
+ icon:'🏃',
+ kind:'한 키 점프',
+ one:'장애물을 뛰어넘으며 달려요',
+ file:'송쌤과학_점프_달리기',
+ src:'추가',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 점프 달리기’ 만들기',
+ basic:{
+  rules:[
+   '시작: 스페이스 키를 누르면 달리기 시작',
+   '점프: 스페이스 키로 캐릭터가 위로 뛰었다 떨어짐',
+   '장애물: 오른쪽에서 왼쪽으로 다가옴, 닿으면 게임 오버',
+   '점수: 달린 시간만큼 점수가 오름',
+   '속도: 시간이 지날수록 조금씩 빨라짐'
+  ],
+  screen:[
+   '가운데: 땅 선과 왼쪽에 달리는 캐릭터(도형)',
+   '위쪽: 점수 표시',
+   '게임 오버 때: ‘다시 시작’ 버튼 표시'
+  ]
+ },
+ full:{
+  rules:[
+   '그림: Canvas에 땅·캐릭터·장애물을 도형으로, 배경이 흘러가 달리는 느낌',
+   '점프: 중력을 받는 곡선, 땅에 있을 때만 점프(공중 연속 점프 금지)',
+   '장애물: 높이·폭이 다른 2~3종, 간격은 무작위지만 항상 넘을 수 있게',
+   '점수: 0.1초당 1점',
+   '속도: 처음엔 느리게, 10초마다 빨라짐, 최대 속도 제한',
+   '충돌: 그림보다 약간 작은 판정 상자로 억울한 충돌 막기',
+   '기록: 최고 점수를 localStorage에 저장'
+  ],
+  controls:[
+   'PC: 스페이스·위 방향키로 점프',
+   '모바일: 게임 화면 아무 곳이나 터치하면 점프'
+  ],
+  screen:[
+   '위쪽: 현재 점수·최고 점수',
+   '시작 화면: 한 줄 안내 ‘스페이스나 화면 터치로 점프’',
+   '버튼: 시작·일시정지·계속하기·다시 시작·음소거, 누르기 쉬운 크기',
+   '결과 화면: 최종 점수·최고 기록·재도전 버튼, 효과음은 첫 조작 뒤'
+  ],
+  checks:[
+   'requestAnimationFrame과 경과 시간 기반 이동으로 컴퓨터마다 같은 빠르기',
+   '화면을 벗어나면 자동 일시정지, 게임 중 스페이스·터치로 스크롤 막기',
+   '재시작 때 속도·장애물·점수 초기화, 게임 루프 중복 실행 막기',
+   '키를 누르고 있어도 점프는 한 번만',
+   '저장이 막혀도 게임은 계속'
+  ]
+ }
+},
+{id:'catch',
+ name:'별똥별 받기',
+ icon:'🌠',
+ kind:'좌우 이동',
+ one:'바구니로 별을 받고 돌은 피해요',
+ file:'송쌤과학_별똥별_받기',
+ src:'추가',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 별똥별 받기’ 만들기',
+ basic:{
+  rules:[
+   '시작: 아무 방향키나 누르면 게임 시작',
+   '조작: 좌우 방향키로 아래쪽 바구니 이동',
+   '별: 위에서 떨어지는 별을 받으면 10점',
+   '돌: 떨어지는 돌을 받으면 생명 1개 줄어듦',
+   '끝: 생명 3개를 모두 잃으면 게임 오버'
+  ],
+  screen:[
+   '가운데: 밤하늘 게임판과 바닥의 바구니',
+   '위쪽: 점수·남은 생명 표시',
+   '게임 오버 때: ‘다시 시작’ 버튼 표시'
+  ]
+ },
+ full:{
+  rules:[
+   '그림: Canvas에 밤하늘·바구니·별·돌을 도형이나 이모지로 직접 그리기',
+   '떨어지기: 별과 돌이 위쪽 무작위 위치에서 낙하, 돌은 전체의 약 30%',
+   '별: 바구니에 닿으면 10점, 놓쳐도 감점 없음',
+   '돌: 바구니에 닿으면 생명 1개 감소, 1초 무적, 0개면 끝',
+   '난이도: 20초마다 낙하 속도·개수 올림, 최대값 제한',
+   '판정: 바구니 윗면에 닿을 때만 받기, 한 물체는 한 번만 판정',
+   '기록: 최고 점수를 localStorage에 저장'
+  ],
+  controls:[
+   'PC: 좌우 방향키·A/D·마우스 이동',
+   '모바일: 드래그로 바구니 이동, 바구니는 화면 밖으로 안 나감'
+  ],
+  screen:[
+   '위쪽: 점수·남은 생명(❤ 개수)·최고 점수, 한 줄 조작 안내',
+   '별과 돌: 색뿐 아니라 모양도 다르게(뾰족한 별, 둥근 돌)',
+   '버튼: 시작·일시정지·계속하기·다시 시작·음소거, 누르기 쉬운 크기',
+   '결과 화면: 최종 점수·받은 별 수·최고 기록·재도전, 효과음은 첫 조작 뒤'
+  ],
+  checks:[
+   'requestAnimationFrame과 경과 시간 기반 이동 사용',
+   '화면을 벗어나면 자동 일시정지, 게임 영역 터치 스크롤 막기',
+   '재시작 때 별·돌·점수·생명 초기화, 게임 루프 중복 실행 막기',
+   '화면 크기가 바뀌어도 바구니 위치와 드래그 좌표가 맞는지 확인',
+   '저장이 막혀도 게임은 계속'
+  ]
+ }
+},
+{id:'reaction',
+ name:'반응 속도 측정',
+ icon:'⚡',
+ kind:'타이밍 누르기',
+ one:'색이 바뀌는 순간 빨리 눌러요',
+ file:'송쌤과학_반응_속도_측정',
+ src:'추가',
+ goal:'웹 브라우저에서 바로 실행되는 ‘송쌤과학 반응 속도 측정’ 만들기',
+ basic:{
+  rules:[
+   '시작: ‘시작’ 버튼을 누르면 화면이 빨간색 ‘기다리세요’로 바뀜',
+   '신호: 1~4초 무작위 시간 뒤 초록색 ‘지금!’으로 바뀜',
+   '측정: 초록이 된 순간부터 누를 때까지 걸린 시간(ms) 기록',
+   '너무 일찍: 초록 전에 누르면 ‘너무 빨라요’ 표시, 그 회차 다시',
+   '끝: 5회 측정 뒤 평균 시간 표시'
+  ],
+  screen:[
+   '가운데: 화면 대부분을 차지하는 큰 누르기 영역',
+   '위쪽: 회차(예: 3/5)와 방금 기록 표시',
+   '끝났을 때: 5회 기록·평균과 ‘다시 하기’ 버튼'
+  ]
+ },
+ full:{
+  rules:[
+   '대기: 누르기 영역이 빨간색 ‘기다리세요’, 1~4초 무작위 시간 뒤 초록색 ‘지금!’',
+   '측정: performance.now()로 초록이 된 순간부터 누를 때까지 ms, 정수로 표시',
+   '너무 일찍: 초록 전에 누르면 ‘너무 빨라요!’, 그 회차는 기록 없이 다시',
+   '회차: 5회 측정, 각 회차 뒤 기록을 보여 주고 누르면 다음 회차',
+   '평균: 5회 평균 ms, 가장 빠른·느린 기록도 표시',
+   '기록: 가장 좋은(짧은) 평균을 localStorage에 저장'
+  ],
+  controls:[
+   'PC: 마우스 클릭 또는 스페이스 키',
+   '모바일: 누르기 영역 터치, 손가락이 닿는 순간 판정'
+  ],
+  screen:[
+   '처음 안내: ‘초록색으로 바뀌면 최대한 빨리 누르세요’',
+   '색만으로 구분하지 않기: ‘기다리세요’·‘지금!’ 글자와 아이콘 함께',
+   '위쪽: 회차/5·방금 기록·최고 평균',
+   '결과 화면: 5회 기록 막대·평균·가장 빠른 기록·‘다시 하기’ 버튼'
+  ],
+  checks:[
+   '대기 타이머가 겹쳐 신호가 두 번 오지 않게, 다시 하기 때 타이머 정리',
+   '한 번 누를 때 두 번 측정되지 않게(클릭과 터치 중복 막기)',
+   '화면을 벗어나면 그 회차 취소하고 다시',
+   '너무 일찍 누른 회차는 평균에 넣지 않기',
+   '빠르게 눌러도 화면 확대·스크롤 막기, 저장이 막혀도 측정은 계속'
+  ]
+ }
+}
+];
+
+/* ════════ 송쌤과학 가상실험실 만들기 (학생용) v1.0 ════════ */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS='ssl-student-v1';
+
+/* ── AI 사이트 5곳 : 받는 글자 수·결과를 받는 방법이 서로 다르다 ── */
+const SAVE_RUN=n=>[
+  '「복사하고 '+n+' 열기」를 누르고, 대화창에 Ctrl+V로 붙여 넣어 보내요.',
+  'AI가 쓴 코드 칸의 「복사」 단추를 눌러요. 파일을 내려받게 해 줬다면 4번으로 가요.',
+  '메모장을 열어 붙여 넣고 「다른 이름으로 저장」을 눌러요. 파일 이름 끝을 .html로, 파일 형식을 ‘모든 파일’로, 인코딩을 UTF-8로 골라요.',
+  '저장한 파일을 두 번 눌러 브라우저에서 열어요.'];
+const AIS=[
+ {k:'Copilot',mark:'Co',c:'#0F6FB8',rec:1,url:'https://m365.cloud.microsoft/chat',budget:2000,lvl:'short',
+  who:'학교 Microsoft 365 계정',
+  note:'한 번에 읽는 글자 수가 적은 계정이 있어 <b>2,000자 안쪽</b>으로 맞춰요. 긴 코드는 중간에 끊길 수 있으니 ‘짧게’로 시작하고 기능은 하나씩 더해요.',
+  out:f=>['전체 코드를 생략 없이 코드 블록 하나로 보여 주기','가능하면 ‘'+f+'.html’ 파일로 내려받게 하고, 안 되면 저장 방법을 한 줄로 알려 주기'],
+  run:SAVE_RUN('Copilot')},
+ {k:'Gemini',mark:'G',c:'#7655D6',url:'https://gemini.google.com/app',budget:4000,lvl:'long',
+  who:'만 14세 이상 Google 계정',
+  note:'입력창의 「도구」에서 <b>Canvas</b>를 켜고 보내면, 만든 것을 그 자리에서 바로 실행해 볼 수 있어요.',
+  out:f=>['Gemini의 캔버스(Canvas) 기능으로 만들어 미리보기로 바로 실행되게 하기','코드는 생략 없이 끝까지 쓰기'],
+  run:['입력창의 「도구」에서 Canvas를 켜요.','「복사하고 Gemini 열기」로 복사한 프롬프트를 붙여 넣어 보내요.','오른쪽 Canvas 창에서 「미리보기」를 눌러 실행해요.','다 되면 코드를 복사해 메모장에 .html 파일(인코딩 UTF-8)로 저장해 두어요.']},
+ {k:'ChatGPT',mark:'GPT',c:'#0B7D61',url:'https://chatgpt.com/',budget:4000,lvl:'long',
+  who:'만 13세 이상 · 18세 미만은 보호자 동의',
+  note:'<b>캔버스</b>가 열리면 미리보기로 바로 실행해 볼 수 있어요. 안 열리면 코드를 메모장에 저장해서 실행해요.',
+  out:f=>['ChatGPT의 캔버스 기능으로 만들어 미리보기로 실행되게 하기','‘'+f+'.html’ 파일로 저장하는 방법도 한 줄로 알려 주기'],
+  run:['「복사하고 ChatGPT 열기」로 복사한 프롬프트를 붙여 넣어 보내요.','캔버스 창이 열리면 「미리보기」로 실행해요.','캔버스가 안 열리면 코드를 복사해 메모장에 .html 파일(인코딩 UTF-8)로 저장해요.','저장한 파일을 두 번 눌러 브라우저에서 열어요.']},
+ {k:'Claude',mark:'Cl',c:'#B4532F',url:'https://claude.ai/new',budget:4000,lvl:'long',
+  who:'만 18세 이상',
+  note:'<b>아티팩트</b> 창에서 만든 것이 바로 실행돼요. 나이 제한이 있으니 선생님이 보여 줄 때 함께 봐요.',
+  out:f=>['아티팩트(Artifact)로 만들어 바로 실행되게 하기','코드는 생략 없이 끝까지 쓰기'],
+  run:['「복사하고 Claude 열기」로 복사한 프롬프트를 붙여 넣어 보내요.','오른쪽 아티팩트 창에서 만든 것이 바로 실행돼요.','고칠 곳을 대화창에 말하면 아티팩트가 새로 바뀌어요.','다 되면 아티팩트의 내려받기 단추로 .html 파일을 저장해요.']},
+ {k:'SenGPT',mark:'Sen',c:'#2E7D4F',url:'https://gov.wrks.ai/',budget:2000,lvl:'short',
+  who:'서울시교육청 계정',
+  note:'코드를 메모장에 저장해서 실행해요. 긴 글은 끝까지 못 읽을 수 있어 <b>2,000자 안쪽</b>으로 맞춰요.',
+  out:f=>['전체 코드를 생략 없이 코드 블록 하나로 보여 주기','메모장에 붙여 넣어 ‘'+f+'.html’로 저장하는 방법을 한 줄로 알려 주기'],
+  run:SAVE_RUN('SenGPT')}
+];
+
+const IDEAS=['캐릭터를 내가 좋아하는 동물로 바꾸기','배경은 밤하늘, 별이 반짝이게','게임이 끝나면 응원 한마디 보여 주기','점수가 오를 때마다 색이 바뀌게'];
+
+/* ── 실험실 유형 3가지 ── */
+const TYPES={
+ explore:{name:'탐구형',tag:'바꿔 보며 규칙 찾기',desc:'값을 바꾸면 결과가 어떻게 달라지는지 보고 규칙을 찾아요.',eg:'예) 추의 무게 ↔ 용수철이 늘어난 길이',c:'ex',
+  icon:'<path d="M4 19V5M4 19h16"/><path d="M7.5 15.5l4-4.5 3 2.5 4.5-6"/>',
+  line:'탐구형(값을 바꿔 보며 규칙 찾기)',qLabel:'알아보고 싶은 것 <small>탐구 질문</small>',qName:'알아볼 것',
+  qPh:'예) 추의 무게가 커지면 용수철이 늘어난 길이는 어떻게 달라질까?',tPh:'예) 용수철에 매단 추의 무게와 늘어난 길이',
+  fields:[{k:'a',label:'바꿀 것',sm:'내가 조절하는 것',pl:'바꿀 것',ph:'예) 매다는 추의 개수(무게)'},
+          {k:'b',label:'볼 것',sm:'달라지는 결과',pl:'볼 것',ph:'예) 용수철이 늘어난 길이(cm)'},
+          {k:'c',label:'똑같이 둘 것',sm:'선택',pl:'똑같이 둘 것',ph:'예) 같은 용수철 쓰기',opt:1}],
+  rules:['한 번에 한 가지만 바꾸게 하고, 바꾸면 장면이 바로 달라지게 하기','‘기록’ 버튼으로 값을 모아 한눈에 견주어 보게 하기','마지막에 알게 된 규칙을 한 문장으로 쓰는 칸 두기']},
+ lab:{name:'실험형',tag:'순서대로 실험하기',desc:'기구를 준비하고 순서대로 재고 기록해요.',eg:'예) 질량과 부피를 재서 밀도 구하기',c:'lab',
+  icon:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M8 15h8"/>',
+  line:'실험형(순서대로 실험하고 기록하기)',qLabel:'알아보고 싶은 것 <small>탐구 질문</small>',qName:'알아볼 것',
+  qPh:'예) 질량과 부피를 재면 어떤 물질인지 구별할 수 있을까?',tPh:'예) 금속 조각의 밀도 구하기',
+  fields:[{k:'a',label:'준비물',sm:'실험 기구와 재료',pl:'준비물',ph:'예) 전자저울, 눈금실린더, 물, 금속 조각'},
+          {k:'b',label:'실험 순서',sm:'한 줄에 한 단계',pl:'실험 순서',ph:'예)\n질량 재기\n부피 재기\n밀도 계산하기',area:1,max:200,steps:1},
+          {k:'c',label:'재서 기록할 것',sm:'단위도 함께',pl:'기록할 것',ph:'예) 질량(g), 부피(cm³), 밀도(g/cm³)'}],
+  rules:['실험 순서를 단계로 안내하고, 한 단계를 마치면 다음으로 넘어가게 하기','기구는 직접 그리고, 누르거나 끌어서 조작하게 하기','잰 값을 표에 기록하고 결과를 정리하는 칸 두기','실험을 시작하기 전에 안전 수칙을 한 줄로 보여 주기']},
+ game:{name:'게임형',tag:'미션으로 익히기',desc:'과학 내용을 맞히거나 미션을 깨며 익혀요.',eg:'예) 원소 기호를 보고 이름 맞히기',c:'game',
+  icon:'<rect x="2.5" y="7" width="19" height="11" rx="5.5"/><path d="M7.5 11v3M6 12.5h3"/><path d="M15.5 11.4v.2M17.6 13.4v.2"/>',
+  line:'게임형(과학 내용을 미션과 점수로 익히기)',qLabel:'게임으로 익힐 것',qName:'익힐 것',
+  qPh:'예) 원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?',tPh:'예) 주기율표 원소 기호 맞히기',
+  hows:['퀴즈 맞히기','짝 맞추기','분류하기','순서 맞추기','미션 깨기'],
+  fields:[{k:'a',label:'과학 내용',sm:'문제로 낼 것',pl:'다룰 내용',ph:'예) 원자 번호 1~20번 원소의 기호와 이름',area:1,max:400},
+          {k:'b',label:'성공 조건',sm:'어떻게 하면 이기나요?',pl:'성공 조건',ph:'예) 10문제 중 8문제 이상 맞히기'}],
+  rules:['과학 내용을 알아야 이길 수 있게 하기(운이나 빠르기만으로 이기지 않게)','틀리면 점수만 깎지 말고 왜 그런지 한 줄로 알려 주기','끝나면 점수와 함께 ‘알게 된 것’ 정리 화면 보여 주기']}
+};
+const EXTRAS=[['graph','그래프','값의 변화를 보여 주는 그래프'],['table','기록 표','기록 표'],['quiz','확인 문제 3개','확인 문제 3개(틀리면 힌트)'],
+  ['hint','힌트 버튼','힌트 버튼'],['level','단계 3개','쉬움→어려움 3단계'],['sound','효과음','효과음(끄기 버튼 포함)'],['save','결과 그림 저장','결과를 그림으로 저장하는 버튼']];
+const EX_DEF={explore:['graph','table'],lab:['table','quiz'],game:['hint','level']};
+const LAYS=[
+ ['lr','왼쪽 조작 · 오른쪽 장면','노트북에 좋아요','왼쪽에 조작판, 오른쪽에 큰 장면(좁은 화면에서는 위아래로)','<rect class="a" x="6" y="6" width="26" height="48" rx="4"/><rect class="b" x="36" y="6" width="54" height="48" rx="4"/>'],
+ ['tb','위 장면 · 아래 조작','휴대폰에 좋아요','위에 큰 장면, 아래에 조작 버튼','<rect class="b" x="6" y="6" width="84" height="32" rx="4"/><rect class="a" x="6" y="42" width="84" height="12" rx="4"/>'],
+ ['full','화면 가득','게임에 좋아요','화면 가득 장면, 버튼은 가장자리에 작게','<rect class="b" x="6" y="6" width="84" height="48" rx="4"/><rect class="c" x="12" y="42" width="20" height="7" rx="3.5"/><rect class="c" x="64" y="42" width="20" height="7" rx="3.5"/>']];
+const LAY_DEF={explore:'lr',lab:'lr',game:'full'};
+const MOODS=[['bright','밝은 실험실','밝고 깔끔한 실험실 느낌'],['night','밤하늘','어두운 밤하늘·우주 느낌'],['note','공책 손그림','공책에 손으로 그린 듯한 느낌'],
+  ['game','또렷한 게임 화면','색이 또렷한 게임 화면 느낌'],['auto','AI에게 맡기기','주제에 어울리게 정해 주기']];
+const PROMISES=['HTML 파일 하나로 만들기','한글이 깨지지 않게, 글자는 모두 한국어','과학 내용은 교과서 수준으로 정확하게','모르는 수치는 지어내지 않기','휴대폰과 노트북에서 모두 잘 보이게','색으로만 구분하지 않기'];
+const MODES=[['now','바로 만들기','프롬프트를 보내면 AI가 바로 만들어요.'],
+  ['plan','계획부터 확인','AI가 먼저 계획서를 보여 줘요. 읽어 보고 ‘좋아, 만들어 줘’라고 답하면 만들기 시작해요.']];
+
+const PRESETS={
+ explore:[
+  {chip:'용수철과 추',title:'용수철에 매단 추의 무게와 늘어난 길이',q:'추의 무게가 커지면 용수철이 늘어난 길이는 어떻게 달라질까?',a:'매다는 추의 개수(무게)',b:'용수철이 늘어난 길이(cm)',c:'같은 용수철 쓰기',ex:['graph','table']},
+  {chip:'전압과 전류',title:'전압과 전류의 관계',q:'전압을 높이면 니크롬선에 흐르는 전류의 세기는 어떻게 달라질까?',a:'전압(V)',b:'전류계가 가리키는 전류의 세기(A)',c:'같은 니크롬선 쓰기',ex:['graph','table']},
+  {chip:'기체의 압력과 부피',title:'주사기 속 기체의 압력과 부피',q:'기체에 가하는 압력이 커지면 기체의 부피는 어떻게 달라질까?',a:'피스톤을 누르는 압력',b:'기체의 부피(mL)와 기체 입자의 움직임',c:'온도와 기체의 양',ex:['graph','table']},
+  {chip:'빛의 세기와 광합성',title:'빛의 세기와 광합성',q:'빛이 세질수록 검정말에서 나오는 기포 수는 어떻게 달라질까?',a:'전등의 밝기(빛의 세기)',b:'1분 동안 검정말에서 나오는 기포 수(개)',c:'물의 온도와 검정말의 양',ex:['graph','table']}],
+ lab:[
+  {chip:'밀도 구하기',title:'금속 조각의 밀도 구하기',q:'질량과 부피를 재면 어떤 물질인지 구별할 수 있을까?',a:'전자저울, 눈금실린더, 물, 금속 조각 3가지',b:'전자저울로 금속 조각의 질량 재기\n눈금실린더에 물을 넣고 부피 읽기\n금속 조각을 넣고 늘어난 부피 구하기(1 mL = 1 cm³)\n밀도 = 질량 ÷ 부피 계산하기',c:'질량(g), 부피(cm³), 밀도(g/cm³)',ex:['table','quiz']},
+  {chip:'물의 끓는점',title:'물이 끓는 동안의 온도 변화',q:'물이 끓는 동안 온도는 어떻게 될까?',a:'비커, 물, 가열 장치, 온도계, 초시계, 끓임쪽, 보안경',b:'비커에 물과 끓임쪽 넣기\n가열하면서 1분마다 온도 기록하기\n끓기 시작한 뒤에도 3분 더 기록하기\n시간과 온도의 관계를 그래프로 보기',c:'가열 시간(분), 온도(℃)',ex:['table','graph']},
+  {chip:'양파 세포 관찰',title:'현미경으로 양파 표피 세포 관찰하기',q:'양파 표피 세포는 어떤 모습일까?',a:'현미경, 받침유리, 덮개유리, 양파, 아세트산 카민 용액, 스포이트, 핀셋, 거름종이',b:'받침유리에 물을 한 방울 떨어뜨리고 양파 표피 올리기\n덮개유리를 비스듬히 덮어 공기 방울이 생기지 않게 하기\n아세트산 카민 용액으로 염색하기\n낮은 배율에서 초점을 맞춘 뒤 높은 배율로 관찰하고 그리기',c:'배율, 관찰한 세포의 모습(세포벽, 핵)',ex:['hint','quiz']},
+  {chip:'달의 모양 변화',title:'달의 위치에 따른 모양(위상) 변화 모형 실험',q:'달의 위치가 바뀌면 지구에서 보이는 달의 모양은 어떻게 달라질까?',a:'전등(태양), 스타이로폼 공(달), 관찰자(지구)',b:'전등을 켜고 관찰자가 가운데 서기\n공을 머리보다 조금 높게 들고, 위에서 볼 때 시계 반대 방향으로 45°씩 옮기기\n관찰자가 본 공의 밝은 부분 그리기\n위치와 모양을 표로 정리하기',c:'달의 위치(8곳), 보이는 모양(위상)',ex:['table','quiz']}],
+ game:[
+  {chip:'원소 기호 퀴즈',title:'원소 기호 맞히기',q:'원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?',how:'퀴즈 맞히기',a:'원자 번호 1~20번 원소의 기호와 이름(H 수소, He 헬륨, Li 리튬, Be 베릴륨, B 붕소, C 탄소, N 질소, O 산소, F 플루오린, Ne 네온, Na 나트륨, Mg 마그네슘, Al 알루미늄, Si 규소, P 인, S 황, Cl 염소, Ar 아르곤, K 칼륨, Ca 칼슘)',b:'10문제 중 8문제 이상 맞히기',ex:['hint','level'],lay:'tb',mood:'game'},
+  {chip:'소화 기관 순서',title:'음식물이 지나가는 길',q:'음식물은 우리 몸에서 어떤 순서로 이동할까?',how:'순서 맞추기',a:'음식물이 지나가는 소화 기관: 입 → 식도 → 위 → 소장 → 대장 → 항문',b:'소화 기관 카드를 순서대로 모두 놓기',ex:['hint'],lay:'full',mood:'bright'},
+  {chip:'암석 분류',title:'암석 분류하기',q:'암석은 만들어진 과정에 따라 어떻게 나눌 수 있을까?',how:'분류하기',a:'화성암(현무암, 화강암), 퇴적암(역암, 사암, 셰일, 석회암), 변성암(편마암, 대리암)',b:'암석 카드 8장을 모두 바르게 분류하기',ex:['hint','sound'],lay:'full',mood:'note'},
+  {chip:'전기 회로 미션',title:'전구에 불 켜기',q:'전지, 전구, 스위치를 어떻게 연결해야 전구에 불이 켜질까?',how:'미션 깨기',a:'전기 회로 연결(전지·전구·스위치·전선), 회로가 끊어지면 전류가 흐르지 않음, 전구의 직렬연결과 병렬연결',b:'미션 5개를 차례로 해결하기',ex:['hint','level'],lay:'full',mood:'game'}]
+};
+
+const FIXES=[
+ ['✂️','코드가 중간에 끊겼어요','코드가 중간에 끊겼어. 전체 코드를 처음부터 끝까지 생략 없이 코드 블록 하나로 다시 보여 줘.'],
+ ['🚫','실행이 안 돼요','실행했더니 [화면에 아무것도 안 나와]. 원인을 찾아 고친 전체 코드를 다시 보여 주고, 무엇을 고쳤는지 2줄로 알려 줘.'],
+ ['🔤','한글이 깨져 보여요','한글이 깨져 보여. <meta charset="UTF-8">를 넣은 전체 코드를 다시 보여 주고, 메모장에서 저장할 때 고를 인코딩도 알려 줘.'],
+ ['📱','화면이 잘리거나 글자가 작아요','휴대폰과 노트북 화면에서 잘리지 않게 크기를 맞추고 글자와 버튼을 더 크게 해 줘. 다른 기능은 그대로 둬.'],
+ ['➕','기능을 하나 더하고 싶어요','지금 작동하는 부분은 그대로 두고 [더하고 싶은 기능] 하나만 추가해 줘. 바뀐 전체 코드를 보여 줘.'],
+ ['🔬','과학 내용이 맞는지 궁금해요','이 실험실의 과학 내용 중 틀렸거나 지나치게 단순하게 만든 부분이 있는지 중학교 교과서 수준에서 점검해 줘. 고칠 곳이 있으면 고친 전체 코드를 보여 줘.'],
+ ['🎨','더 보기 좋게 만들고 싶어요','기능은 그대로 두고 화면을 더 보기 좋게 다듬어 줘. 색은 3가지 안쪽으로 맞추고 여백과 글자 크기를 정리해 줘.'],
+ ['💡','코드가 어떻게 작동하는지 알고 싶어요','이 코드가 어떻게 작동하는지 중학생이 이해할 수 있게 5줄로 설명해 줘. 내가 숫자만 바꿔 볼 수 있는 곳도 3군데 알려 줘.']
+];
+
+/* ── 함께 연습 : 주기율표 게임을 계획 → 설계 → 방향 → 규칙 → 초안 순서로 ── */
+const EL30=((GAMES.find(g=>g.id==='element')||{full:{rules:['']}}).full.rules[0]||'').replace(/^원소:\s*/,'');
+const PRAC=[
+ {k:'계획',card:'c1',t:'무엇을, 왜 만들까요?',p:'만들 것을 한 문장으로 말할 수 있게 정해요. 주제와, 이 게임으로 익히고 싶은 것을 써요.',
+  eg:'주제 「주기율표 원소 기호 맞히기」 · 익힐 것 「원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?」',
+  fill(){const f=S.f.game;f.title='주기율표 원소 기호 맞히기';f.q='원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?'}},
+ {k:'설계',card:'c2',t:'꼭 있어야 하는 것은 무엇일까요?',p:'게임 방식, 문제로 낼 과학 내용, 성공 조건을 정해요. 더 넣을 것은 꼭 필요한 것만 골라요.',
+  eg:'퀴즈 맞히기 · 원자 번호 1~30번 원소의 기호와 이름 · 3분 동안 점수 모으기 · 힌트 버튼',
+  fill(){const f=S.f.game;f.how='퀴즈 맞히기';f.a='원자 번호 1~30번 원소의 기호와 이름 — '+EL30;f.b='3분 동안 점수 모으기(한 번에 맞히면 1점, 다시 맞히면 0.5점)';S.ex.game=['hint']}},
+ {k:'방향',card:'c3',t:'전체 느낌은 어떻게 할까요?',p:'화면을 어떻게 나눌지, 어떤 분위기로 할지 정해요. 퀴즈는 문제 카드가 크게 보여야 풀기 쉬워요.',
+  eg:'위에 큰 문제 카드, 아래에 보기 버튼 · 또렷한 게임 화면',
+  fill(){S.lay.game='tb';S.md.game='game'}},
+ {k:'규칙',card:'c4',t:'AI가 꼭 지킬 약속은 무엇일까요?',p:'기본 약속에 내 규칙을 하나 더해요. ‘계획부터 확인’을 고르면 AI가 내 뜻을 제대로 알았는지 먼저 볼 수 있어요.',
+  eg:'원소 이름은 교과서 표기로 쓰기(플루오린·나트륨·칼륨) · 계획부터 확인',
+  fill(){S.f.game.rule='원소 이름은 교과서 표기로 쓰기(플루오린·나트륨·칼륨)';S.mode='plan'}},
+ {k:'초안',card:null,t:'초안 프롬프트가 완성됐어요',p:'「내 프롬프트」를 처음부터 끝까지 읽어 보고 AI에게 보내요. AI가 계획서를 보여 주면 살펴본 뒤 ‘좋아, 만들어 줘’라고 답해요. ① 탭 06번 「주기율표 퀴즈」 프롬프트와 견주어 보는 것도 좋아요.',eg:null}
+];
+
+/* ── 상태 ── */
+const S={view:'game',src:'game',ai:'Copilot',level:'short',game:'snake',idea:'',
+  type:'explore',
+  f:{explore:{title:'',q:'',a:'',b:'',c:'',rule:''},lab:{title:'',q:'',a:'',b:'',c:'',rule:''},game:{title:'',q:'',how:'퀴즈 맞히기',a:'',b:'',rule:''}},
+  md:{explore:'bright',lab:'bright',game:'game'},
+  ex:{explore:[...EX_DEF.explore],lab:[...EX_DEF.lab],game:[...EX_DEF.game]},
+  lay:{...LAY_DEF},mode:'now'};
+let prac=-1; const pracDone=new Set();
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(LS)||'null'); if(!d||typeof d!=='object')return;
+    ['view','src','ai','level','game','idea','type','mode'].forEach(k=>{if(typeof d[k]==='string')S[k]=d[k]});
+    ['explore','lab','game'].forEach(t=>{
+      if(d.f&&d.f[t])Object.keys(S.f[t]).forEach(k=>{if(typeof d.f[t][k]==='string')S.f[t][k]=d.f[t][k]});
+      if(d.ex&&Array.isArray(d.ex[t]))S.ex[t]=d.ex[t].filter(x=>EXTRAS.some(e=>e[0]===x)).slice(0,3);
+      if(d.lay&&LAYS.some(l=>l[0]===d.lay[t]))S.lay[t]=d.lay[t];
+      if(d.md&&MOODS.some(m=>m[0]===d.md[t]))S.md[t]=d.md[t];
+    });
+  }catch(e){}
+  if(!AIS.some(a=>a.k===S.ai))S.ai='Copilot';
+  if(!GAMES.some(g=>g.id===S.game))S.game=GAMES[0].id;
+  if(!TYPES[S.type])S.type='explore';
+  if(!['game','lab','fix'].includes(S.view))S.view='game';
+  if(!['game','lab'].includes(S.src))S.src='game';
+  if(!['short','long'].includes(S.level))S.level='short';
+  if(!MODES.some(m=>m[0]===S.mode))S.mode='now';
+}
+let saveT=0;
+function saveNow(){clearTimeout(saveT);try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+function save(){clearTimeout(saveT);saveT=setTimeout(saveNow,250)}
+window.addEventListener('pagehide',saveNow);
+
+/* ── 프롬프트 조립 ── */
+const ai=()=>AIS.find(a=>a.k===S.ai)||AIS[0];
+const game=()=>GAMES.find(g=>g.id===S.game)||GAMES[0];
+const sec=(name,arr)=>arr&&arr.length?'['+name+']\n'+arr.map(x=>'- '+x).join('\n'):'';
+const one=s=>String(s||'').replace(/\s*\n+\s*/g,', ').replace(/\s+/g,' ').trim();
+
+function buildGame(){
+  const g=game(),a=ai(),sh=S.level==='short',d=sh?g.basic:g.full,out=[];
+  out.push(sec('역할',[sh?'중학생을 돕는 친절한 웹 게임 개발자':'중학생을 돕는 친절한 웹 게임 개발자이자 화면 디자이너']));
+  out.push(sec('목표',[g.goal]));
+  out.push(sec('규칙',d.rules));
+  if(!sh)out.push(sec('조작',d.controls));
+  out.push(sec('화면',d.screen));
+  if(one(S.idea))out.push(sec('내 아이디어',[one(S.idea)]));
+  if(!sh)out.push(sec('오류 막기',d.checks));
+  const cond=['HTML 파일 하나에 CSS·자바스크립트 모두 넣기','외부 파일·이미지·라이브러리 쓰지 않기','<meta charset="UTF-8">로 한글이 깨지지 않게 하기','화면 글자는 모두 한국어로 쓰기'];
+  if(sh||!(d.checks||[]).some(c=>c.includes('스크롤')))cond.push('게임하는 동안 페이지가 스크롤되지 않게 하기');
+  if(!sh)cond.push('코드 주요 부분에 한국어 주석을 달고, 내가 숫자만 바꿔 볼 곳 3가지 알려 주기');
+  out.push(sec('확인 조건',cond));
+  out.push(sec('결과물',a.out(g.file)));
+  return out.filter(Boolean).join('\n\n');
+}
+function labFile(){return (one(S.f[S.type].title)||'나의').replace(/[\\/:*?"<>|]/g,'').replace(/\s+/g,'_').slice(0,30)+'_가상실험실'}
+function buildLab(){
+  const T=TYPES[S.type],a=ai(),sh=S.level==='short',f=S.f[S.type],out=[];
+  const AUTO='주제에 맞게 알맞은 것으로 정해 주기';
+  out.push(sec('역할',['중학교 과학을 잘 아는 친절한 웹 개발자']));
+  const goal=['중학생이 직접 조작하며 배우는 과학 가상실험실 만들기','주제: '+(one(f.title)||'(주제를 써 주세요)'),'유형: '+T.line];
+  goal.push(T.qName+': '+(one(f.q)||'주제에 맞는 질문 하나를 정해 첫 화면에 보여 주기'));
+  out.push(sec('목표',goal));
+  const sci=[];
+  if(S.type==='game')sci.push('게임 방식: '+f.how);
+  T.fields.forEach(fd=>{
+    let v=f[fd.k]||'';
+    if(fd.steps){const st=v.split(/\n+/).map(s=>s.trim().replace(/^(\d+[.)]|[①-⑩\-•])\s*/,'')).filter(Boolean);v=st.map((s,i)=>'①②③④⑤⑥⑦⑧⑨⑩'[i]+' '+s).join(' → ')}
+    else v=one(v);
+    if(v)sci.push(fd.pl+': '+v); else if(!fd.opt)sci.push(fd.pl+': '+AUTO);
+  });
+  if(sh)sci.push('교과서 수준으로 정확하게, 단위 표시, 모르는 수치는 지어내지 않기');
+  else sci.push('중학교 교과서 수준으로 정확하게, 값에는 단위 표시하기','확실하지 않은 수치는 지어내지 말고 경향만 보여 주기');
+  out.push(sec('과학 내용',sci));
+  out.push(sec('활동 방법',sh?T.rules.slice(0,2):T.rules));
+  const scr=['배치: '+LAYS.find(l=>l[0]===S.lay[S.type])[3],'분위기: '+MOODS.find(m=>m[0]===S.md[S.type])[2]];
+  if(!sh)scr.push('첫 화면에서 무엇을 하고 무엇을 보면 되는지 바로 알 수 있게 하기');
+  const ex=S.ex[S.type].map(k=>EXTRAS.find(e=>e[0]===k)[2]);
+  if(ex.length)scr.push('더 넣을 것: '+ex.join(', '));
+  scr.push('‘처음부터 다시’ 버튼 두기');
+  out.push(sec('화면',scr));
+  const cond=['HTML 파일 하나에 CSS·자바스크립트 모두 넣기','외부 파일·이미지·라이브러리 쓰지 않기','<meta charset="UTF-8">로 한글이 깨지지 않게, 화면 글자는 모두 한국어','휴대폰과 노트북 화면 모두에서 잘 보이고 버튼은 누르기 쉽게 크게','색으로만 구분하지 말고 글자나 기호도 함께 쓰기'];
+  if(!sh)cond.push('틀려도 탓하지 않는 말투 쓰기(예: 다시 살펴볼까요?)');
+  if(one(f.rule))cond.push(one(f.rule));
+  out.push(sec('확인 조건',cond));
+  out.push(sec('결과물',a.out(labFile())));
+  if(S.mode==='plan')out.push(sec('진행 순서',['먼저 코드 없이 화면 구성·기능·과학 내용을 10줄 안쪽 계획서로 보여 주기','내가 ‘좋아, 만들어 줘’라고 하면 그때 전체 코드 만들기']));
+  return out.filter(Boolean).join('\n\n');
+}
+const currentText=()=>S.src==='lab'?buildLab():buildGame();
+const fileName=()=>(S.src==='lab'?labFile():game().file)+'_프롬프트.txt';
+
+/* ── 알림 · 복사 · 저장 ── */
+let toastT=0;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('in');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('in'),2800)}
+function copyFallback(txt){const ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;opacity:0';
+  document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);return ok}
+async function copyText(txt){
+  try{await navigator.clipboard.writeText(txt);return true}catch(e){return copyFallback(txt)}
+}
+function ready(){
+  if(S.src==='lab'&&!one(S.f[S.type].title)){
+    setView('lab');const el=$('#fTitle');el.classList.add('need');
+    setTimeout(()=>{el.focus({preventScroll:true});scrollToEl($('#c1'))},60);
+    toast('주제를 먼저 써 주세요. 나머지 빈칸은 AI가 정해요.');return false}
+  return true;
+}
+async function doCopy(){
+  if(!ready())return;
+  toast(await copyText(currentText())?'복사했어요. AI 대화창에 Ctrl+V로 붙여 넣어요.':'복사하지 못했어요. 프롬프트를 직접 선택해 복사해 주세요.');
+}
+function doTxt(){
+  if(!ready())return;
+  const b=new Blob(['﻿'+currentText().replace(/\r?\n/g,'\r\n')+'\r\n'],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fileName();document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  toast('메모장 파일로 저장했어요. 다운로드 폴더를 확인해요.');
+}
+async function goAI(){
+  if(!ready())return;
+  const a=ai(),txt=currentText();
+  let pr=null;try{pr=navigator.clipboard.writeText(txt)}catch(e){pr=null}
+  let ok=true;if(!pr)ok=copyFallback(txt);
+  window.open(a.url,'_blank','noopener,noreferrer');
+  if(pr){try{await pr}catch(e){ok=copyFallback(txt)}}
+  toast(ok?'복사했어요. 새 창에 열린 '+a.k+' 대화창에 Ctrl+V로 붙여 넣어요.':a.k+'을(를) 열었어요. 복사가 막혀 있으니 프롬프트를 직접 복사해 주세요.');
+}
+
+/* ── 그리기 ── */
+function renderAIs(){
+  $('#ais').innerHTML=AIS.map(a=>'<button class="aib" type="button" data-ai="'+a.k+'" aria-pressed="'+(a.k===S.ai)+'" style="--k:'+a.c+'"><span class="mk">'+a.mark+'</span>'+a.k+(a.rec?'<span class="rec">추천</span>':'')+'</button>').join('');
+  const a=ai();
+  $('#aiNote').innerHTML='<span class="who">'+esc(a.who)+'</span><span>'+a.note+'</span>';
+}
+function renderGames(){
+  $('#gameGrid').innerHTML=GAMES.map((g,i)=>'<button class="gcard" type="button" data-g="'+g.id+'" aria-pressed="'+(g.id===S.game)+'"><span class="no">'+String(i+1).padStart(2,'0')+'</span><span class="ic" aria-hidden="true">'+g.icon+'</span><b>'+esc(g.name)+'</b><small>'+esc(g.one)+'</small><span class="kd">'+esc(g.kind)+'</span></button>').join('');
+  $('#ideaChips').innerHTML=IDEAS.map(t=>'<button class="chip ghost" type="button" data-idea="'+esc(t)+'">'+esc(t)+'</button>').join('');
+  $('#gIdea').value=S.idea;
+}
+function renderLab(){
+  const T=TYPES[S.type],f=S.f[S.type];
+  $('#typeGrid').innerHTML=Object.keys(TYPES).map(k=>{const t=TYPES[k];return '<button class="tcard" type="button" data-type="'+k+'" data-c="'+t.c+'" aria-pressed="'+(k===S.type)+'"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true">'+t.icon+'</svg></span><b>'+t.name+'<span>'+t.tag+'</span></b><p>'+t.desc+'</p><small>'+t.eg+'</small></button>'}).join('');
+  $('#presetChips').innerHTML=PRESETS[S.type].map((p,i)=>'<button class="chip" type="button" data-preset="'+i+'">'+esc(p.chip)+'</button>').join('')+'<button class="chip ghost" type="button" data-preset="clear">비우기</button>';
+  $('#fTitle').value=f.title;$('#fTitle').placeholder=T.tPh;
+  $('#lblQ').innerHTML=T.qLabel;$('#fQ').value=f.q;$('#fQ').placeholder=T.qPh;
+  let h='';
+  if(T.hows)h+='<div class="fld"><div class="lbl">게임 방식</div><div class="chips">'+T.hows.map(x=>'<button class="chip" type="button" data-how="'+x+'" aria-pressed="'+(x===f.how)+'">'+x+'</button>').join('')+'</div></div>';
+  const fld=fd=>'<label class="fld"><span class="lbl">'+fd.label+' <small>'+fd.sm+'</small></span>'+(fd.area
+     ?'<textarea class="in" data-f="'+fd.k+'" maxlength="'+(fd.max||200)+'" placeholder="'+esc(fd.ph)+'">'+esc(f[fd.k]||'')+'</textarea>'
+     :'<input class="in" data-f="'+fd.k+'" maxlength="70" placeholder="'+esc(fd.ph)+'" value="'+esc(f[fd.k]||'')+'">')+'</label>';
+  const inputs=T.fields.filter(x=>!x.area),areas=T.fields.filter(x=>x.area);
+  if(S.type==='lab')h+=fld(T.fields[0])+fld(T.fields[1])+fld(T.fields[2]);
+  else if(areas.length)h+=areas.map(fld).join('')+inputs.map(fld).join('');
+  else h+='<div class="grid2">'+inputs.slice(0,2).map(fld).join('')+'</div>'+inputs.slice(2).map(fld).join('');
+  $('#typeFields').innerHTML=h;
+  renderPicks();
+  $('#promise').innerHTML=PROMISES.map(p=>'<li>'+p+'</li>').join('');
+  $('#fRule').value=f.rule;
+}
+function renderPicks(){
+  const ex=S.ex[S.type],full=ex.length>=3;
+  $('#extraChips').innerHTML=EXTRAS.map(e=>{const on=ex.includes(e[0]);return '<button class="chip" type="button" data-ex="'+e[0]+'" aria-pressed="'+on+'"'+(!on&&full?' disabled':'')+'>'+e[1]+'</button>'}).join('');
+  $('#exHelp').textContent=full?'3개를 모두 골랐어요':'3개까지 · 많을수록 코드가 길어져요';
+  $('#layGrid').innerHTML=LAYS.map(l=>'<button class="lay" type="button" data-lay="'+l[0]+'" aria-pressed="'+(l[0]===S.lay[S.type])+'"><svg viewBox="0 0 96 60" aria-hidden="true">'+l[4]+'</svg><b>'+l[1]+'</b><small>'+l[2]+'</small></button>').join('');
+  $('#moodChips').innerHTML=MOODS.map(m=>'<button class="chip" type="button" data-mood="'+m[0]+'" aria-pressed="'+(m[0]===S.md[S.type])+'">'+m[1]+'</button>').join('');
+  $('#modeChips').innerHTML=MODES.map(m=>'<button class="chip" type="button" data-mode="'+m[0]+'" aria-pressed="'+(m[0]===S.mode)+'">'+m[1]+'</button>').join('');
+  $('#modeHelp').textContent=MODES.find(m=>m[0]===S.mode)[2];
+}
+function renderFix(){
+  const a=ai();
+  $('#runTitle').textContent=a.k+'에서 실행하는 법';
+  $('#runSteps').innerHTML=a.run.map(s=>'<li>'+esc(s)+'</li>').join('');
+  $('#fixes').innerHTML=FIXES.map((x,i)=>'<div class="fix"><b><i aria-hidden="true">'+x[0]+'</i>'+esc(x[1])+'</b><p>'+esc(x[2]).replace(/\[([^\]]+)\]/g,'<mark>[$1]</mark>')+'</p><button class="btn" type="button" data-fix="'+i+'">이 말 복사</button></div>').join('');
+}
+function renderPrev(){
+  const a=ai(),text=currentText();
+  let h='',open=false;
+  text.split('\n').forEach(line=>{
+    if(!line.trim())return;
+    const m=line.match(/^\[(.+)\]$/);
+    if(m){if(open)h+='</ul>';h+='<h4>['+esc(m[1])+']'+(m[1]==='결과물'?'<em>'+a.k+' 맞춤</em>':'')+'</h4><ul>';open=true}
+    else h+='<li>'+esc(line.replace(/^- /,''))+'</li>';
+  });
+  if(open)h+='</ul>';
+  $('#prev').innerHTML=h;
+  const n=text.length,over=n>a.budget;
+  $('#mBar').style.width=Math.min(100,Math.round(n/a.budget*100))+'%';
+  $('#mTxt').textContent=n.toLocaleString('ko-KR')+'자 / '+a.k+' 권장 '+a.budget.toLocaleString('ko-KR')+'자';
+  $('#meter').classList.toggle('over',over);
+  $('#overMsg').hidden=!over;
+  if(over){const sh=S.level==='short';$('#overTxt').textContent=sh?'길어요. 직접 쓴 내용을 조금 줄여 주세요.':'길어서 '+a.k+'이(가) 끝까지 못 읽을 수 있어요.';$('#btnShort').hidden=sh}
+  $$('#lvl button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===S.level));
+  $('#recS').textContent=a.lvl==='short'?'추천':'';$('#recL').textContent=a.lvl==='long'?'추천':'';
+  $('#srcTag').textContent=S.src==='lab'?TYPES[S.type].name+' · '+(one(S.f[S.type].title)||'주제를 써 주세요'):'게임 · '+game().name;
+  const arrow='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  $('#btnGo').innerHTML='복사하고 '+a.k+' 열기'+arrow;$('#dockGo').innerHTML='복사하고 '+a.k+' 열기'+arrow;
+  save();
+}
+function scrollToEl(el){
+  if(!el)return;
+  const off=$('.top').offsetHeight+$('.tabs').offsetHeight+(prac>=0&&getComputedStyle($('#prac')).position==='sticky'?$('#prac').offsetHeight+10:0)+14;
+  window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-off),behavior:'smooth'});
+}
+function setView(v,keepScroll){
+  S.view=v;if(v!=='fix')S.src=v;
+  ['game','lab','fix'].forEach(k=>{$('#v-'+k).hidden=k!==v;const t=$('#tab-'+k);t.setAttribute('aria-selected',k===v);t.tabIndex=k===v?0:-1});
+  if(v==='fix')renderFix();
+  renderPrev();
+  if(!keepScroll){const top=$('.hero').offsetTop+$('.hero').offsetHeight;if(window.scrollY>top)window.scrollTo({top:top});}
+}
+
+/* ── 함께 연습 ── */
+function renderPrac(){
+  const on=prac>=0;
+  $('#prac').classList.toggle('on',on);$('#pracIdle').hidden=on;$('#pracRun').hidden=!on;
+  $$('.card.spot').forEach(c=>c.classList.remove('spot'));
+  if(!on)return;
+  const st=PRAC[prac],last=prac===PRAC.length-1;
+  $('#pracSteps').innerHTML=PRAC.map((p,i)=>'<li><button type="button" data-prac="'+i+'"'+(i===prac?' aria-current="step"':'')+' class="'+(pracDone.has(i)&&i!==prac?'done':'')+'"><i>'+(pracDone.has(i)&&i!==prac?'✓':i+1)+'</i><span>'+p.k+'</span></button></li>').join('');
+  $('#pracSay').innerHTML='<b>'+(prac+1)+'단계 · '+st.k+' — '+st.t+'</b><p>'+esc(st.p)+'</p>'+(st.eg?'<div class="eg"><em>예시</em>'+esc(st.eg)+'</div>':'');
+  $('#pracFill').hidden=last;
+  $('#pracNext').textContent=last?'복사하고 '+ai().k+' 열기':'다음 단계';
+  if(st.card){const c=$('#'+st.card);c.classList.add('spot')}
+}
+function pracGo(i,scroll){
+  prac=Math.max(0,Math.min(PRAC.length-1,i));
+  if(prac===PRAC.length-1)for(let k=0;k<prac;k++)pracDone.add(k);
+  renderPrac();
+  if(scroll!==false)setTimeout(()=>{const st=PRAC[prac];scrollToEl(st.card?$('#'+st.card):(window.matchMedia('(max-width:1080px)').matches?$('#side'):$('#prac')))},40);
+}
+function pracStart(){
+  pracDone.clear();
+  if(S.type!=='game'){S.type='game'}
+  S.src='lab';renderLab();renderPrev();pracGo(0);
+  toast('연습을 시작해요. 예시를 채워도 되고 내 생각을 써도 돼요.');
+}
+function pracEnd(){prac=-1;renderPrac();toast('연습을 마쳤어요. 이제 내 주제로 계획을 세워 봐요.')}
+
+/* ── 테마 ── */
+const TH_ICON={
+ auto:'<rect x="3" y="4.5" width="18" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 17v3.5"/>',
+ light:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>',
+ dark:'<path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a7 7 0 0 0 10.8 10.8Z"/>'};
+const TH_LBL={auto:'기기 설정 따름',light:'밝은 화면',dark:'어두운 화면'};
+let themeMode='auto';
+function applyTheme(){
+  const el=document.documentElement;
+  if(themeMode==='auto')delete el.dataset.t;else el.dataset.t=themeMode;
+  $('#icTheme').innerHTML=TH_ICON[themeMode];
+  const b=$('#btnTheme');b.title='화면 테마 · 지금은 '+TH_LBL[themeMode];b.setAttribute('aria-label',b.title);
+}
+
+/* ── 이벤트 ── */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  const d=b.dataset;
+  if(d.v){setView(d.v);return}
+  if(d.ai){const was=S.level;S.ai=d.ai;S.level=ai().lvl;renderAIs();if(S.view==='fix')renderFix();renderPrev();if(prac>=0)renderPrac();
+    toast(d.ai+'에 맞게 프롬프트를 바꿨어요.'+(was!==S.level?' 길이는 ‘'+(S.level==='short'?'짧게':'자세히')+'’가 잘 맞아요.':''));return}
+  if(d.g){S.game=d.g;S.src='game';$$('.gcard').forEach(c=>c.setAttribute('aria-pressed',c.dataset.g===S.game));renderPrev();
+    if(window.matchMedia('(max-width:1080px)').matches)toast(game().name+' 프롬프트가 준비됐어요. 아래에서 확인해요.');return}
+  if(d.idea){S.idea=d.idea;$('#gIdea').value=S.idea;renderPrev();return}
+  if(d.l){S.level=d.l;renderPrev();return}
+  if(d.type){S.type=d.type;renderLab();renderPrev();if(prac>=0)renderPrac();return}
+  if(d.preset!==undefined){
+    const f=S.f[S.type];
+    if(d.preset==='clear'){Object.keys(f).forEach(k=>{if(k!=='how')f[k]=''});S.ex[S.type]=[...EX_DEF[S.type]];S.lay[S.type]=LAY_DEF[S.type];toast(TYPES[S.type].name+' 칸을 비웠어요.')}
+    else{const p=PRESETS[S.type][+d.preset];f.title=p.title;f.q=p.q;['a','b','c'].forEach(k=>{if(k in f)f[k]=p[k]||''});if(p.how)f.how=p.how;
+      if(p.ex)S.ex[S.type]=[...p.ex];if(p.lay)S.lay[S.type]=p.lay;if(p.mood)S.md[S.type]=p.mood;toast('예시를 채웠어요. 내 생각대로 고쳐 써요.')}
+    $('#fTitle').classList.remove('need');renderLab();renderPrev();if(prac>=0)renderPrac();return}
+  if(d.how){S.f.game.how=d.how;$$('[data-how]').forEach(c=>c.setAttribute('aria-pressed',c.dataset.how===d.how));renderPrev();return}
+  if(d.ex){const ex=S.ex[S.type],i=ex.indexOf(d.ex);if(i>=0)ex.splice(i,1);else if(ex.length<3)ex.push(d.ex);renderPicks();renderPrev();return}
+  if(d.lay){S.lay[S.type]=d.lay;renderPicks();renderPrev();return}
+  if(d.mood){S.md[S.type]=d.mood;renderPicks();renderPrev();return}
+  if(d.mode){S.mode=d.mode;renderPicks();renderPrev();return}
+  if(d.fix!==undefined){copyText(FIXES[+d.fix][2]).then(ok=>toast(ok?'복사했어요. AI 대화창에 붙여 넣고 색칠한 곳을 내 말로 바꿔요.':'복사하지 못했어요. 글을 직접 선택해 복사해 주세요.'));return}
+  if(d.prac!==undefined){pracGo(+d.prac);return}
+  switch(b.id){
+    case 'btnGo':case 'dockGo':goAI();break;
+    case 'btnCopy':doCopy();break;
+    case 'btnTxt':case 'dockTxt':doTxt();break;
+    case 'btnShort':S.level='short';renderPrev();break;
+    case 'goFix':setView('fix');scrollToEl($('#v-fix'));break;
+    case 'dockView':scrollToEl($('#side'));break;
+    case 'btnDraft':if(ready()){if(window.matchMedia('(max-width:1080px)').matches)scrollToEl($('#side'));toast('초안 프롬프트가 준비됐어요. 「내 프롬프트」를 읽어 보고 복사해요.')}break;
+    case 'pracStart':pracStart();break;
+    case 'pracEnd':pracEnd();break;
+    case 'pracNext':if(prac===PRAC.length-1)goAI();else{pracDone.add(prac);pracGo(prac+1)}break;
+    case 'pracFill':{PRAC[prac].fill();pracDone.add(prac);$('#fTitle').classList.remove('need');renderLab();renderPrev();renderPrac();toast('예시를 채웠어요. 읽어 보고 내 생각대로 고쳐도 돼요.');break}
+    case 'btnTheme':{const o=['auto','light','dark'];themeMode=o[(o.indexOf(themeMode)+1)%3];try{localStorage.setItem('ssl-theme',themeMode)}catch(e){}applyTheme();toast('화면 테마 : '+TH_LBL[themeMode]);break}
+  }
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='gIdea'){S.idea=t.value;S.src='game'}
+  else if(t.id==='fTitle'){S.f[S.type].title=t.value;t.classList.remove('need')}
+  else if(t.id==='fQ')S.f[S.type].q=t.value;
+  else if(t.id==='fRule')S.f[S.type].rule=t.value;
+  else if(t.dataset&&t.dataset.f)S.f[S.type][t.dataset.f]=t.value;
+  else return;
+  renderPrev();
+});
+$('.tabs-in').addEventListener('keydown',e=>{
+  if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;
+  const o=['game','lab','fix'],i=e.key==='Home'?0:e.key==='End'?2:(o.indexOf(S.view)+(e.key==='ArrowRight'?1:2))%3;
+  setView(o[i]);$('#tab-'+o[i]).focus();e.preventDefault();
+});
+
+/* ── 시작 ── */
+load();
+try{const t=localStorage.getItem('ssl-theme');if(t==='light'||t==='dark')themeMode=t}catch(e){}
+applyTheme();renderAIs();renderGames();renderLab();renderPrac();setView(S.view,true);
+window.LabMaker={S,AIS,TYPES,PRESETS,PRAC,buildGame,buildLab,currentText,fileName};
+</script>
+</body>
+</html>
