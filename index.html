@@ -188,6 +188,9 @@ textarea.in{min-height:92px;max-height:240px;resize:vertical;line-height:1.55;fi
 .chip:disabled{opacity:.45;cursor:not-allowed}
 .help{font-size:12.5px;color:var(--tx3);margin-top:7px}
 
+.in.howx{flex:1 1 190px;max-width:300px;min-height:40px;padding:7px 15px;border-radius:999px;font-size:13.5px}
+.in.howx.on{border-color:var(--acc-fill);background:var(--tint);font-weight:600}
+
 /* ── 유형 카드 ── */
 .tcard{position:relative;text-align:left;padding:15px 15px 14px;border-radius:17px;border:1.5px solid var(--line);background:var(--surf);
   display:flex;flex-direction:column;gap:5px;transition:var(--dur) var(--ease);--c:var(--c-ex);--t:var(--t-ex)}
@@ -316,6 +319,26 @@ textarea.in{min-height:92px;max-height:240px;resize:vertical;line-height:1.55;fi
 .up-act .btn.pri{min-height:46px;font-size:14.5px;box-shadow:none}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:none}
 
+/* ── 약속 · 고르기 상자 · 확인 체크 ── */
+.pledge{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:3px 14px;align-items:baseline;font-size:12.5px;color:var(--tx2)}
+.pledge b{color:var(--acc);font-weight:800;white-space:nowrap}
+select.in{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer;text-overflow:ellipsis;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237E909C' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 6l4.5 4.5L12.5 6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;background-size:14px}
+select.in:disabled{opacity:.6;cursor:not-allowed}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.checks li{display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;padding:5px 8px 5px 12px;border:1px solid var(--line);border-radius:13px;background:var(--surf)}
+.checks li.ok{background:var(--tint);border-color:transparent}
+.checks label{flex:1 1 230px;display:flex;align-items:center;gap:10px;min-height:40px;font-size:14.5px;cursor:pointer}
+.checks input{width:20px;height:20px;flex:none;accent-color:var(--acc-fill)}
+.checks .chip{font-size:12.5px}
+.checks li.ok .chip{display:none}
+.chk-result{margin-top:10px;font-size:13.5px;color:var(--tx2);background:var(--surf2);border-radius:11px;padding:9px 12px}
+.chk-result.done{background:var(--tint2);color:var(--tx);font-weight:700}
+.judge-mini{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:10px;font-size:12.5px;color:var(--tx3)}
+.judge-mini b{color:var(--tx2);margin-right:4px}
+.ready{font-size:12.5px;color:var(--tx3)}
+
 /* ── 함께 연습 ── */
 .practice{border:1.5px solid transparent;background:linear-gradient(var(--surf),var(--surf)) padding-box,linear-gradient(120deg,var(--c-game),var(--acc)) border-box;padding:15px var(--sp5)}
 .pr-idle{display:flex;align-items:center;gap:var(--sp4)}
@@ -414,6 +437,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
   <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v6L4 18a3 3 0 0 0 2.6 4.5h10.8A3 3 0 0 0 20 18l-5-9V3"/><path d="M7.5 14h9"/></svg>송쌤과학</span>
   <span class="htitle">가상실험실 만들기 <b>학생용</b></span>
   <span class="sp"></span>
+  <button class="ico" id="btnReset" type="button" aria-label="처음부터 새로 시작" title="처음부터 새로 시작"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5v5h5"/><path d="M4.6 9.5A8 8 0 1 1 4 12.6"/></svg></button>
   <button class="ico" id="btnTheme" type="button" aria-label="화면 테마 바꾸기"><svg viewBox="0 0 24 24" id="icTheme" aria-hidden="true"></svg></button>
 </header>
 
@@ -442,6 +466,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
     <div class="q">어느 AI에 붙여 넣나요?<small>고른 곳에 맞게 프롬프트가 바뀌어요</small></div>
     <div class="ais" id="ais"></div>
     <div class="ainote" id="aiNote" aria-live="polite"></div>
+    <p class="pledge"><b>AI와 함께할 때 약속</b><span>① 이름·학교·전화번호 같은 개인 정보는 쓰지 않기</span><span>② AI가 만든 것은 초안, 과학 내용은 교과서로 확인하기</span><span>③ 다른 게임의 캐릭터·그림은 따라 만들지 않기</span></p>
   </section>
 
   <div class="wrap">
@@ -510,6 +535,10 @@ footer a:hover{color:var(--acc);text-decoration:underline}
 
         <div class="card" id="c1">
           <div class="ch"><span class="n">1</span><h3>계획 — 무엇을, 왜 만들까요?</h3><span class="sub">한 문장으로 말할 수 있으면 충분해요</span></div>
+          <div class="grid2">
+            <label class="fld"><span class="lbl">학년 <small>누가 쓸 실험실인가요?</small></span><select class="in" id="fGrade"></select></label>
+            <label class="fld"><span class="lbl" id="lblUnit">단원 <small>선택</small></span><select class="in" id="fUnit"></select></label>
+          </div>
           <label class="fld"><span class="lbl">주제 <small>꼭 써요</small></span>
             <input class="in" id="fTitle" maxlength="40" placeholder="예) 용수철에 매단 추의 무게와 늘어난 길이"></label>
           <label class="fld"><span class="lbl" id="lblQ">알아보고 싶은 것 <small>탐구 질문</small></span>
@@ -530,7 +559,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
           <div class="lbl">화면 밑그림</div>
           <div class="grid3 lays" id="layGrid"></div>
           <div class="fld">
-            <div class="lbl">분위기</div>
+            <div class="lbl">분위기 <small>고르거나 직접 써요</small></div>
             <div class="chips" id="moodChips"></div>
           </div>
         </div>
@@ -562,12 +591,10 @@ footer a:hover{color:var(--acc);text-decoration:underline}
         </div>
 
         <div class="card">
-          <div class="ch"><span class="n">2</span><h3>AI가 만든 것, 내가 판단해요</h3><span class="sub">주인공은 나, AI는 도와주는 짝꿍</span></div>
-          <div class="judge">
-            <div><b><i>✓</i>받아들이기</b><p>부탁한 대로 작동하고 과학 내용도 맞을 때</p></div>
-            <div><b><i>✕</i>거절하기</b><p>부탁과 다른 것을 만들었거나 내용이 틀렸을 때</p></div>
-            <div><b><i>↻</i>고쳐서 쓰기</b><p>대체로 맞지만 다듬을 곳이 있을 때</p></div>
-          </div>
+          <div class="ch"><span class="n">2</span><h3>실행해 보고 확인하기</h3><span class="sub">주인공은 나, AI는 도와주는 짝꿍</span></div>
+          <ul class="checks" id="checks"></ul>
+          <p class="chk-result" id="chkResult" aria-live="polite"></p>
+          <p class="judge-mini"><span><b>받아들이기</b> 모두 통과했을 때</span><span><b>고쳐서 쓰기</b> 다듬을 곳이 있을 때</span><span><b>거절하기</b> 부탁과 다른 것을 만들었을 때는 프롬프트를 고쳐 다시 보내요</span></p>
         </div>
 
         <div class="card" id="upCard">
@@ -589,6 +616,18 @@ footer a:hover{color:var(--acc);text-decoration:underline}
           <div class="fixes" id="fixes"></div>
           <div class="loop" style="margin-top:16px" aria-label="되풀이하는 순서"><span>① 프롬프트</span><i>→</i><span>② AI 제안</span><i>→</i><span>③ 살펴보기</span><i>→</i><span>④ 다듬기</span><i>→</i><span>⑤ 다시 ①로</span></div>
         </div>
+
+        <div class="card" id="recCard">
+          <div class="ch"><span class="n">5</span><h3>실습 기록 남기기</h3><span class="sub">선생님께 낼 기록지를 파일로 저장해요</span></div>
+          <div class="grid2">
+            <label class="fld"><span class="lbl">학번</span><input class="in" id="rId" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="예) 20312"></label>
+            <label class="fld"><span class="lbl">이름</span><input class="in" id="rName" maxlength="10" autocomplete="off" placeholder="이름"></label>
+          </div>
+          <label class="fld"><span class="lbl">느낀 점·알게 된 것 <small>한두 문장</small></span>
+            <textarea class="in" id="rMemo" maxlength="200" placeholder="예) 프롬프트에 규칙을 자세히 쓸수록 내가 원하는 게임이 나왔다."></textarea></label>
+          <div class="up-act"><button class="btn pri" type="button" id="recSave"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>기록지 저장(txt)</button></div>
+          <p class="help">내가 쓴 프롬프트, 확인한 것, 더한 기능이 함께 담겨요. 파일 이름은 ‘만든 것_학번_이름_날짜’예요. 학번과 이름은 이 기기에 남기지 않아요.</p>
+        </div>
       </section>
     </main>
 
@@ -603,6 +642,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
           </div>
           <div class="meter" id="meter"><div class="bar"><i id="mBar"></i></div><b id="mTxt"></b></div>
           <div class="over-msg" id="overMsg" hidden><span id="overTxt"></span><button type="button" id="btnShort">짧게로 바꾸기</button></div>
+          <p class="ready" id="readyTxt" hidden></p>
         </div>
         <div class="p-body" id="pBody" tabindex="0" aria-label="프롬프트 미리보기"><div class="pv" id="prev"></div></div>
         <div class="p-act">
@@ -629,7 +669,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
   AI가 만든 결과는 초안이에요. 과학 내용이 맞는지 교과서와 견주어 확인하고, 선생님과 함께 다듬어요.<br>
   나이 제한이 있는 AI는 선생님 안내에 따라 써요. 입력한 내용은 이 브라우저에만 저장되고 어디로도 보내지 않아요.<br>
   ⓒ 2026 송쌤과학 · <a href="https://www.youtube.com/@songsamscience" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">YouTube @songsamscience</a>
-  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">Instagram @songsamscience</a> · v1.1 · 2026-11-11
+  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">Instagram @songsamscience</a> · v1.2 · 2026-11-11
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1407,8 +1447,20 @@ const GAMES=[
  }
 }
 ];
+const GRADES=[
+ {id:'e12',label:'초 1~2학년',level:'초등학교 1~2학년',units:['탐험','하루','상상','자연','계절','물건']},
+ {id:'e3',label:'초 3학년',level:'초등학교 3학년',units:['힘과 우리 생활','동물의 생활','식물의 생활','생물의 한살이','물체와 물질','지구와 바다','소리의 성질','감염병과 건강한 생활']},
+ {id:'e4',label:'초 4학년',level:'초등학교 4학년',units:['자석의 이용','물의 상태 변화','땅의 변화','다양한 생물과 우리 생활','밤하늘 관찰','생물과 환경','여러 가지 기체','기후변화와 우리 생활']},
+ {id:'e5',label:'초 5학년',level:'초등학교 5학년',units:['지층과 화석','빛의 성질','용해와 용액','우리 몸의 구조와 기능','혼합물의 분리','날씨와 우리 생활','열과 우리 생활','자원과 에너지']},
+ {id:'e6',label:'초 6학년',level:'초등학교 6학년',units:['산과 염기','물체의 운동','식물의 구조와 기능','지구의 운동','계절의 변화','물질의 연소','전기의 이용','과학과 나의 진로']},
+ {id:'m1',label:'중 1학년',level:'중학교 1학년',units:['과학과 인류의 지속가능한 삶','생물의 구성과 다양성','열','물질의 상태 변화','힘의 작용','기체의 성질','태양계']},
+ {id:'m2',label:'중 2학년',level:'중학교 2학년',units:['물질의 특성','지권의 변화','빛과 파동','물질의 구성','식물과 에너지','동물과 에너지','전기와 자기','별과 우주']},
+ {id:'m3',label:'중 3학년',level:'중학교 3학년',units:['화학 반응의 규칙성','날씨와 기후변화','수권과 해수의 순환','운동과 에너지','자극과 반응','생식과 유전','재해·재난과 안전','과학과 나의 미래']},
+ {id:'h1a',label:'고1 통합과학1',level:'고등학교 1학년 통합과학',units:['과학의 기초','물질과 규칙성','시스템과 상호작용']},
+ {id:'h1b',label:'고1 통합과학2',level:'고등학교 1학년 통합과학',units:['변화와 다양성','환경과 에너지','과학과 미래 사회']}
+];
 
-/* ════════ 송쌤과학 가상실험실 만들기 (학생용) v1.1 ════════ */
+/* ════════ 송쌤과학 가상실험실 만들기 (학생용) v1.2 ════════ */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LS='ssl-student-v1';
@@ -1526,6 +1578,14 @@ const FIXES=[
  ['💡','코드가 어떻게 작동하는지 알고 싶어요','이 코드가 어떻게 작동하는지 중학생이 이해할 수 있게 5줄로 설명해 줘. 내가 숫자만 바꿔 볼 수 있는 곳도 3군데 알려 줘.']
 ];
 
+/* ── 학년·단원(GRADES는 3_units.js) · 단원에 없는 주제는 「자유 탐구」 갈래로 ── */
+const FREE={id:'free',label:'자유 탐구 (교과 밖)',level:'',units:['생활 속 과학','환경과 기후','발명과 공학','몸과 건강','우주와 미래 기술','수학·데이터 탐구','융합(STEAM)','내가 정한 주제']};
+const gradeOf=id=>id==='free'?FREE:GRADES.find(g=>g.id===id)||null;
+
+/* ── 실행해 보고 확인할 것 : [확인 문장, 문제가 있을 때 쓸 FIXES 번호] ── */
+const CHECKS=[['화면이 잘 열리고 글자가 보여요',1],['버튼과 조작이 생각대로 작동해요',1],['한글이 깨지지 않아요',2],
+  ['휴대폰·노트북 화면에서 잘리지 않아요',3],['과학 내용이 교과서와 맞아요',5],['코드가 중간에 끊기지 않고 끝까지 나왔어요',0]];
+
 /* ── 기능 더하기 : 요청 문구 10가지(수업 자료 「HTML 활동 사이트 제작에 도움 되는 요청 문구」) ── */
 const UP_GROUPS=['디자인과 사용 환경','학습과 참여','결과 저장과 제출'];
 const UPS=[
@@ -1551,14 +1611,15 @@ const UP_OUT={
 const EL30=((GAMES.find(g=>g.id==='element')||{full:{rules:['']}}).full.rules[0]||'').replace(/^원소:\s*/,'');
 const PRAC=[
  {k:'계획',card:'c1',t:'무엇을, 왜 만들까요?',p:'만들 것을 한 문장으로 말할 수 있게 정해요. 주제와, 이 게임으로 익히고 싶은 것을 써요.',
-  eg:'주제 「주기율표 원소 기호 맞히기」 · 익힐 것 「원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?」',
-  fill(){const f=S.f.game;f.title='주기율표 원소 기호 맞히기';f.q='원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?'}},
+  eg:'단원 「물질의 구성」 · 주제 「주기율표 원소 기호 맞히기」 · 익힐 것 「원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?」',
+  fill(){const f=S.f.game;f.title='주기율표 원소 기호 맞히기';f.q='원소 기호를 보고 원소 이름을 바로 떠올릴 수 있을까?';
+    const g=GRADES.find(x=>x.id[0]==='m'&&x.units.includes('물질의 구성'));if(g){f.grade=g.id;f.unit='물질의 구성'}}},
  {k:'설계',card:'c2',t:'꼭 있어야 하는 것은 무엇일까요?',p:'게임 방식, 문제로 낼 과학 내용, 성공 조건을 정해요. 더 넣을 것은 꼭 필요한 것만 골라요.',
   eg:'퀴즈 맞히기 · 원자 번호 1~30번 원소의 기호와 이름 · 3분 동안 점수 모으기 · 힌트 버튼',
-  fill(){const f=S.f.game;f.how='퀴즈 맞히기';f.a='원자 번호 1~30번 원소의 기호와 이름 — '+EL30;f.b='3분 동안 점수 모으기(한 번에 맞히면 1점, 다시 맞히면 0.5점)';S.ex.game=['hint']}},
+  fill(){const f=S.f.game;f.how='퀴즈 맞히기';f.howx='';f.a='원자 번호 1~30번 원소의 기호와 이름 — '+EL30;f.b='3분 동안 점수 모으기(한 번에 맞히면 1점, 다시 맞히면 0.5점)';S.ex.game=['hint'];f.exx=''}},
  {k:'방향',card:'c3',t:'전체 느낌은 어떻게 할까요?',p:'화면을 어떻게 나눌지, 어떤 분위기로 할지 정해요. 퀴즈는 문제 카드가 크게 보여야 풀기 쉬워요.',
   eg:'위에 큰 문제 카드, 아래에 보기 버튼 · 또렷한 게임 화면',
-  fill(){S.lay.game='tb';S.md.game='game'}},
+  fill(){S.lay.game='tb';S.md.game='game';S.f.game.moodx=''}},
  {k:'규칙',card:'c4',t:'AI가 꼭 지킬 약속은 무엇일까요?',p:'기본 약속에 내 규칙을 하나 더해요. ‘계획부터 확인’을 고르면 AI가 내 뜻을 제대로 알았는지 먼저 볼 수 있어요.',
   eg:'원소 이름은 교과서 표기로 쓰기(플루오린·나트륨·칼륨) · 계획부터 확인',
   fill(){S.f.game.rule='원소 이름은 교과서 표기로 쓰기(플루오린·나트륨·칼륨)';S.mode='plan'}},
@@ -1568,10 +1629,10 @@ const PRAC=[
 /* ── 상태 ── */
 const S={view:'game',src:'game',ai:'Copilot',level:'short',game:'snake',last:'snake',custom:'',idea:'',
   type:'explore',
-  f:{explore:{title:'',q:'',a:'',b:'',c:'',rule:''},lab:{title:'',q:'',a:'',b:'',c:'',rule:''},game:{title:'',q:'',how:'퀴즈 맞히기',a:'',b:'',rule:''}},
+  f:{explore:{grade:'',unit:'',title:'',q:'',a:'',b:'',c:'',rule:'',exx:'',moodx:''},lab:{grade:'',unit:'',title:'',q:'',a:'',b:'',c:'',rule:'',exx:'',moodx:''},game:{grade:'',unit:'',title:'',q:'',how:'퀴즈 맞히기',howx:'',a:'',b:'',rule:'',exx:'',moodx:''}},
   md:{explore:'bright',lab:'bright',game:'game'},
   ex:{explore:[...EX_DEF.explore],lab:[...EX_DEF.lab],game:[...EX_DEF.game]},
-  lay:{...LAY_DEF},mode:'now',up:[]};
+  lay:{...LAY_DEF},mode:'now',up:[],chk:[]};
 let prac=-1; const pracDone=new Set();
 function load(){
   try{const d=JSON.parse(localStorage.getItem(LS)||'null'); if(!d||typeof d!=='object')return;
@@ -1583,6 +1644,7 @@ function load(){
       if(d.md&&MOODS.some(m=>m[0]===d.md[t]))S.md[t]=d.md[t];
     });
     if(Array.isArray(d.up))S.up=UPS.map(u=>u.n).filter(n=>d.up.includes(n));
+    if(Array.isArray(d.chk))S.chk=CHECKS.map((c,i)=>i).filter(i=>d.chk.includes(i));
   }catch(e){}
   if(!AIS.some(a=>a.k===S.ai))S.ai='Copilot';
   if(!GAMES.some(g=>g.id===S.last))S.last=GAMES[0].id;
@@ -1624,25 +1686,33 @@ function labFile(){return (one(S.f[S.type].title)||'나의').replace(/[\\/:*?"<>
 function buildLab(){
   const T=TYPES[S.type],a=ai(),sh=S.level==='short',f=S.f[S.type],out=[];
   const AUTO='주제에 맞게 알맞은 것으로 정해 주기';
-  out.push(sec('역할',['중학교 과학을 잘 아는 친절한 웹 개발자']));
-  const goal=['중학생이 직접 조작하며 배우는 과학 가상실험실 만들기','주제: '+(one(f.title)||'(주제를 써 주세요)'),'유형: '+T.line];
+  const G=gradeOf(f.grade),U=G&&G.units.includes(f.unit)?f.unit:'',isFree=G===FREE;
+  const school=!G||isFree?'중학교':G.id[0]==='e'?'초등학교':G.id[0]==='h'?'고등학교':'중학교';
+  out.push(sec('역할',[school+' 과학을 잘 아는 친절한 웹 개발자']));
+  const who=G&&!isFree?G.level.replace(/ 통합과학$/,'')+' 학생':'중학생';
+  const goal=[who+'이 직접 조작하며 배우는 과학 가상실험실 만들기'];
+  if(isFree)goal.push('갈래: 자유 탐구'+(U?' · '+U:''));
+  else if(G)goal.push((U?'학년·단원: ':'학년: ')+G.label+(U?' · '+U:''));
+  goal.push('주제: '+(one(f.title)||'(주제를 써 주세요)'),'유형: '+T.line);
+  const acc=isFree?'중학생이 이해할 수 있는 수준으로 정확하게':(G?G.level:'중학교')+' 교과서 수준으로 정확하게';
   goal.push(T.qName+': '+(one(f.q)||'주제에 맞는 질문 하나를 정해 첫 화면에 보여 주기'));
   out.push(sec('목표',goal));
   const sci=[];
-  if(S.type==='game')sci.push('게임 방식: '+f.how);
+  if(S.type==='game')sci.push('게임 방식: '+(one(f.howx)||f.how));
   T.fields.forEach(fd=>{
     let v=f[fd.k]||'';
     if(fd.steps){const st=v.split(/\n+/).map(s=>s.trim().replace(/^(\d+[.)]|[①-⑩\-•])\s*/,'')).filter(Boolean);v=st.map((s,i)=>'①②③④⑤⑥⑦⑧⑨⑩'[i]+' '+s).join(' → ')}
     else v=one(v);
     if(v)sci.push(fd.pl+': '+v); else if(!fd.opt)sci.push(fd.pl+': '+AUTO);
   });
-  if(sh)sci.push('교과서 수준으로 정확하게, 단위 표시, 모르는 수치는 지어내지 않기');
-  else sci.push('중학교 교과서 수준으로 정확하게, 값에는 단위 표시하기','확실하지 않은 수치는 지어내지 말고 경향만 보여 주기');
+  if(sh)sci.push(acc+', 단위 표시, 모르는 수치는 지어내지 않기');
+  else sci.push(acc+', 값에는 단위 표시하기','확실하지 않은 수치는 지어내지 말고 경향만 보여 주기');
   out.push(sec('과학 내용',sci));
   out.push(sec('활동 방법',sh?T.rules.slice(0,2):T.rules));
-  const scr=['배치: '+LAYS.find(l=>l[0]===S.lay[S.type])[3],'분위기: '+MOODS.find(m=>m[0]===S.md[S.type])[2]];
+  const scr=['배치: '+LAYS.find(l=>l[0]===S.lay[S.type])[3],'분위기: '+(one(f.moodx)||MOODS.find(m=>m[0]===S.md[S.type])[2])];
   if(!sh)scr.push('첫 화면에서 무엇을 하고 무엇을 보면 되는지 바로 알 수 있게 하기');
   const ex=S.ex[S.type].map(k=>EXTRAS.find(e=>e[0]===k)[2]);
+  if(one(f.exx))ex.push(one(f.exx));
   if(ex.length)scr.push('더 넣을 것: '+ex.join(', '));
   scr.push('‘처음부터 다시’ 버튼 두기');
   out.push(sec('화면',scr));
@@ -1731,9 +1801,15 @@ function renderLab(){
   $('#typeGrid').innerHTML=Object.keys(TYPES).map(k=>{const t=TYPES[k];return '<button class="tcard" type="button" data-type="'+k+'" data-c="'+t.c+'" aria-pressed="'+(k===S.type)+'"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true">'+t.icon+'</svg></span><b>'+t.name+'<span>'+t.tag+'</span></b><p>'+t.desc+'</p><small>'+t.eg+'</small></button>'}).join('');
   $('#presetChips').innerHTML=PRESETS[S.type].map((p,i)=>'<button class="chip" type="button" data-preset="'+i+'">'+esc(p.chip)+'</button>').join('')+'<button class="chip ghost" type="button" data-preset="clear">비우기</button>';
   $('#fTitle').value=f.title;$('#fTitle').placeholder=T.tPh;
+  const G=gradeOf(f.grade);
+  $('#fGrade').innerHTML='<option value="">고르지 않음 (중학생 수준)</option>'+GRADES.map(g=>'<option value="'+g.id+'"'+(g.id===f.grade?' selected':'')+'>'+esc(g.label)+'</option>').join('')+'<option value="free"'+(f.grade==='free'?' selected':'')+'>'+FREE.label+'</option>';
+  $('#lblUnit').innerHTML=f.grade==='free'?'탐구 갈래 <small>단원에 없는 주제</small>':'단원 <small>선택</small>';
+  const us=$('#fUnit');us.disabled=!G;
+  us.innerHTML='<option value="">'+(!G?'학년을 먼저 골라요':f.grade==='free'?'갈래 고르지 않음':'단원 고르지 않음')+'</option>'+(G?G.units.map(u=>'<option'+(u===f.unit?' selected':'')+'>'+esc(u)+'</option>').join(''):'');
   $('#lblQ').innerHTML=T.qLabel;$('#fQ').value=f.q;$('#fQ').placeholder=T.qPh;
   let h='';
-  if(T.hows)h+='<div class="fld"><div class="lbl">게임 방식</div><div class="chips">'+T.hows.map(x=>'<button class="chip" type="button" data-how="'+x+'" aria-pressed="'+(x===f.how)+'">'+x+'</button>').join('')+'</div></div>';
+  if(T.hows)h+='<div class="fld"><div class="lbl">게임 방식 <small>고르거나 직접 써요</small></div><div class="chips">'+T.hows.map(x=>'<button class="chip" type="button" data-how="'+x+'" aria-pressed="'+(!one(f.howx)&&x===f.how)+'">'+x+'</button>').join('')
+    +'<input class="in howx'+(one(f.howx)?' on':'')+'" data-f="howx" maxlength="20" placeholder="직접 입력 · 예) 빙고, 방 탈출" aria-label="게임 방식 직접 입력" value="'+esc(f.howx||'')+'"></div></div>';
   const fld=fd=>'<label class="fld"><span class="lbl">'+fd.label+' <small>'+fd.sm+'</small></span>'+(fd.area
      ?'<textarea class="in" data-f="'+fd.k+'" maxlength="'+(fd.max||200)+'" placeholder="'+esc(fd.ph)+'">'+esc(f[fd.k]||'')+'</textarea>'
      :'<input class="in" data-f="'+fd.k+'" maxlength="70" placeholder="'+esc(fd.ph)+'" value="'+esc(f[fd.k]||'')+'">')+'</label>';
@@ -1747,16 +1823,40 @@ function renderLab(){
   $('#fRule').value=f.rule;
 }
 function renderPicks(){
-  const ex=S.ex[S.type],full=ex.length>=3;
-  $('#extraChips').innerHTML=EXTRAS.map(e=>{const on=ex.includes(e[0]);return '<button class="chip" type="button" data-ex="'+e[0]+'" aria-pressed="'+on+'"'+(!on&&full?' disabled':'')+'>'+e[1]+'</button>'}).join('');
-  $('#exHelp').textContent=full?'3개를 모두 골랐어요':'3개까지 · 많을수록 코드가 길어져요';
+  const ex=S.ex[S.type],full=ex.length>=3,f=S.f[S.type];
+  const pill=(k,ph,lab)=>'<input class="in howx'+(one(f[k])?' on':'')+'" data-f="'+k+'" maxlength="20" placeholder="'+ph+'" aria-label="'+lab+'" value="'+esc(f[k]||'')+'">';
+  $('#extraChips').innerHTML=EXTRAS.map(e=>{const on=ex.includes(e[0]);return '<button class="chip" type="button" data-ex="'+e[0]+'" aria-pressed="'+on+'"'+(!on&&full?' disabled':'')+'>'+e[1]+'</button>'}).join('')+pill('exx','직접 입력 · 예) 타이머, 순위표','있으면 좋은 것 직접 입력');
+  $('#exHelp').textContent=full?'3개를 모두 골랐어요 · 더 넣고 싶은 것은 직접 써요':'3개까지 고르거나 직접 써요 · 많을수록 코드가 길어져요';
   $('#layGrid').innerHTML=LAYS.map(l=>'<button class="lay" type="button" data-lay="'+l[0]+'" aria-pressed="'+(l[0]===S.lay[S.type])+'"><svg viewBox="0 0 96 60" aria-hidden="true">'+l[4]+'</svg><b>'+l[1]+'</b><small>'+l[2]+'</small></button>').join('');
-  $('#moodChips').innerHTML=MOODS.map(m=>'<button class="chip" type="button" data-mood="'+m[0]+'" aria-pressed="'+(m[0]===S.md[S.type])+'">'+m[1]+'</button>').join('');
+  $('#moodChips').innerHTML=MOODS.map(m=>'<button class="chip" type="button" data-mood="'+m[0]+'" aria-pressed="'+(!one(f.moodx)&&m[0]===S.md[S.type])+'">'+m[1]+'</button>').join('')+pill('moodx','직접 입력 · 예) 파스텔 톤, 바닷속','분위기 직접 입력');
   $('#modeChips').innerHTML=MODES.map(m=>'<button class="chip" type="button" data-mode="'+m[0]+'" aria-pressed="'+(m[0]===S.mode)+'">'+m[1]+'</button>').join('');
   $('#modeHelp').textContent=MODES.find(m=>m[0]===S.mode)[2];
 }
+function renderCheck(){
+  $('#checks').innerHTML=CHECKS.map((c,i)=>{const ok=S.chk.includes(i);return '<li class="'+(ok?'ok':'')+'"><label><input type="checkbox" data-chk="'+i+'"'+(ok?' checked':'')+'><span>'+c[0]+'</span></label><button class="chip ghost" type="button" data-fix="'+c[1]+'">문제 있어요 · 고쳐 달라는 말 복사</button></li>'}).join('');
+  const n=CHECKS.length-S.chk.length,r=$('#chkResult');r.classList.toggle('done',!n);
+  r.textContent=n?'확인할 것이 '+n+'개 남았어요. 문제가 있는 줄은 「고쳐 달라는 말 복사」를 눌러 AI에게 보내요.':'모두 통과했어요! 받아들여도 좋아요. 이제 3번에서 기능을 더해 봐요.';
+}
+function today(){const d=new Date(),p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())}
+const fname=s=>one(s).replace(/[\\/:*?"<>|]/g,'').replace(/\s+/g,'_');
+function buildRecord(){
+  const made=S.src==='lab'?TYPES[S.type].name+' 가상실험실 · '+(one(S.f[S.type].title)||'주제 미정'):'게임 · '+game().name;
+  const ups=UPS.filter(u=>S.up.includes(u.n)).map(u=>u.t);
+  return ['송쌤과학 가상실험실 만들기 — 실습 기록지','','날짜: '+today(),'학번: '+one($('#rId').value),'이름: '+one($('#rName').value),'만든 것: '+made,'사용한 AI: '+ai().k,'',
+    '[실행해 보고 확인한 것]',...CHECKS.map((c,i)=>(S.chk.includes(i)?'✓ ':'□ ')+c[0]),'',
+    '[더한 기능]',ups.length?ups.join(', '):'없음','',
+    '[느낀 점·알게 된 것]',$('#rMemo').value.trim()||'(쓰지 않음)','',
+    '[내가 쓴 프롬프트]',currentText()].join('\n');
+}
+function saveRecord(){
+  const id=$('#rId'),nm=$('#rName');
+  if(!one(id.value)||!one(nm.value)){(one(id.value)?nm:id).focus();toast('학번과 이름을 써 주세요.');return}
+  const base=fname(S.src==='lab'?(one(S.f[S.type].title)||'가상실험실'):game().name).slice(0,30);
+  saveTxt(base+'_'+fname(id.value)+'_'+fname(nm.value)+'_'+today()+'.txt',buildRecord());
+}
 function renderFix(){
   const a=ai();
+  renderCheck();
   $('#runTitle').textContent=a.k+'에서 실행하는 법';
   $('#runSteps').innerHTML=a.run.map(s=>'<li>'+esc(s)+'</li>').join('');
   renderUp();
@@ -1792,6 +1892,10 @@ function renderPrev(){
   if(over){const sh=S.level==='short';$('#overTxt').textContent=sh?'길어요. 직접 쓴 내용을 조금 줄여 주세요.':'길어서 '+a.k+'이(가) 끝까지 못 읽을 수 있어요.';$('#btnShort').hidden=sh}
   $$('#lvl button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===S.level));
   $('#recS').textContent=a.lvl==='short'?'추천':'';$('#recL').textContent=a.lvl==='long'?'추천':'';
+  const rd=$('#readyTxt');
+  if(S.src==='lab'){const T=TYPES[S.type],f=S.f[S.type],empty=(one(f.q)?0:1)+T.fields.filter(fd=>!fd.opt&&!one(f[fd.k])).length;
+    rd.hidden=false;rd.textContent=!one(f.title)?'주제를 쓰면 초안이 완성돼요.':empty?'빈칸 '+empty+'개는 AI가 알맞게 정해요. 직접 채우면 더 내 것이 돼요.':'모든 칸을 채웠어요. 나만의 초안이에요!'}
+  else rd.hidden=true;
   $('#srcTag').textContent=S.src==='lab'?TYPES[S.type].name+' · '+(one(S.f[S.type].title)||'주제를 써 주세요'):'게임 · '+game().name;
   const arrow='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   $('#btnGo').innerHTML='복사하고 '+a.k+' 열기'+arrow;$('#dockGo').innerHTML='복사하고 '+a.k+' 열기'+arrow;
@@ -1867,13 +1971,13 @@ document.addEventListener('click',e=>{
   if(d.preset!==undefined){
     const f=S.f[S.type];
     if(d.preset==='clear'){Object.keys(f).forEach(k=>{if(k!=='how')f[k]=''});S.ex[S.type]=[...EX_DEF[S.type]];S.lay[S.type]=LAY_DEF[S.type];toast(TYPES[S.type].name+' 칸을 비웠어요.')}
-    else{const p=PRESETS[S.type][+d.preset];f.title=p.title;f.q=p.q;['a','b','c'].forEach(k=>{if(k in f)f[k]=p[k]||''});if(p.how)f.how=p.how;
+    else{const p=PRESETS[S.type][+d.preset];f.title=p.title;f.q=p.q;f.exx='';f.moodx='';['a','b','c'].forEach(k=>{if(k in f)f[k]=p[k]||''});if(p.how){f.how=p.how;f.howx=''}
       if(p.ex)S.ex[S.type]=[...p.ex];if(p.lay)S.lay[S.type]=p.lay;if(p.mood)S.md[S.type]=p.mood;toast('예시를 채웠어요. 내 생각대로 고쳐 써요.')}
     $('#fTitle').classList.remove('need');renderLab();renderPrev();if(prac>=0)renderPrac();return}
-  if(d.how){S.f.game.how=d.how;$$('[data-how]').forEach(c=>c.setAttribute('aria-pressed',c.dataset.how===d.how));renderPrev();return}
+  if(d.how){const f=S.f.game;f.how=d.how;f.howx='';const x=$('[data-f="howx"]');if(x){x.value='';x.classList.remove('on')}$$('[data-how]').forEach(c=>c.setAttribute('aria-pressed',c.dataset.how===d.how));renderPrev();return}
   if(d.ex){const ex=S.ex[S.type],i=ex.indexOf(d.ex);if(i>=0)ex.splice(i,1);else if(ex.length<3)ex.push(d.ex);renderPicks();renderPrev();return}
   if(d.lay){S.lay[S.type]=d.lay;renderPicks();renderPrev();return}
-  if(d.mood){S.md[S.type]=d.mood;renderPicks();renderPrev();return}
+  if(d.mood){S.md[S.type]=d.mood;S.f[S.type].moodx='';renderPicks();renderPrev();return}
   if(d.mode){S.mode=d.mode;renderPicks();renderPrev();return}
   if(d.fix!==undefined){copyText(FIXES[+d.fix][2]).then(ok=>toast(ok?'복사했어요. AI 대화창에 붙여 넣고 색칠한 곳을 내 말로 바꿔요.':'복사하지 못했어요. 글을 직접 선택해 복사해 주세요.'));return}
   if(d.up){const i=S.up.indexOf(d.up);if(i>=0)S.up.splice(i,1);else S.up.push(d.up);renderUp();save();return}
@@ -1883,6 +1987,8 @@ document.addEventListener('click',e=>{
     case 'btnCopy':doCopy();break;
     case 'btnTxt':case 'dockTxt':doTxt();break;
     case 'btnShort':S.level='short';renderPrev();break;
+    case 'recSave':saveRecord();break;
+    case 'btnReset':if(confirm('입력한 내용을 모두 지우고 처음부터 시작할까요?')){clearTimeout(saveT);window.removeEventListener('pagehide',saveNow);try{localStorage.removeItem(LS)}catch(e){}location.reload()}break;
     case 'useTitle':if(S.game==='custom'){S.game=S.last;syncCustom();renderPrev()}else useCustom();break;
     case 'upCopy':copyText(buildUp()).then(ok=>toast(ok?'복사했어요. 사이트를 만들던 AI 대화창에 이어서 붙여 넣어요.':'복사하지 못했어요. 글을 직접 선택해 복사해 주세요.'));break;
     case 'upTxt':saveTxt((S.src==='lab'?labFile():game().file)+'_기능_더하기_요청.txt',buildUp());break;
@@ -1904,9 +2010,19 @@ document.addEventListener('input',e=>{
   else if(t.id==='fTitle'){S.f[S.type].title=t.value;t.classList.remove('need')}
   else if(t.id==='fQ')S.f[S.type].q=t.value;
   else if(t.id==='fRule')S.f[S.type].rule=t.value;
-  else if(t.dataset&&t.dataset.f)S.f[S.type][t.dataset.f]=t.value;
+  else if(t.dataset&&t.dataset.f){const f=S.f[S.type];f[t.dataset.f]=t.value;
+    const k=t.dataset.f,on=!!one(t.value);
+    if(k==='howx'||k==='exx'||k==='moodx')t.classList.toggle('on',on);
+    if(k==='howx')$$('[data-how]').forEach(c=>c.setAttribute('aria-pressed',!on&&c.dataset.how===f.how));
+    if(k==='moodx')$$('[data-mood]').forEach(c=>c.setAttribute('aria-pressed',!on&&c.dataset.mood===S.md[S.type]))}
   else return;
   renderPrev();
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.id==='fGrade'){const f=S.f[S.type];f.grade=t.value;f.unit='';renderLab();renderPrev()}
+  else if(t.id==='fUnit'){S.f[S.type].unit=t.value;renderPrev()}
+  else if(t.dataset&&t.dataset.chk!==undefined){const i=+t.dataset.chk,k=S.chk.indexOf(i);if(t.checked&&k<0)S.chk.push(i);if(!t.checked&&k>=0)S.chk.splice(k,1);renderCheck();save()}
 });
 $('.tabs-in').addEventListener('keydown',e=>{
   if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;
@@ -1918,7 +2034,7 @@ $('.tabs-in').addEventListener('keydown',e=>{
 load();
 try{const t=localStorage.getItem('ssl-theme');if(t==='light'||t==='dark')themeMode=t}catch(e){}
 applyTheme();renderAIs();renderGames();renderLab();renderPrac();setView(S.view,true);
-window.LabMaker={S,AIS,TYPES,PRESETS,PRAC,UPS,buildGame,buildLab,buildUp,currentText,fileName};
+window.LabMaker={S,AIS,TYPES,PRESETS,PRAC,UPS,GRADES,FREE,CHECKS,buildGame,buildLab,buildUp,buildRecord,currentText,fileName};
 </script>
 </body>
 </html>
