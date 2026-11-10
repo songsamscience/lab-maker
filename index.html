@@ -252,7 +252,7 @@ textarea.in{min-height:92px;max-height:240px;resize:vertical;line-height:1.55;fi
 .pv li::before{content:"";position:absolute;left:1px;top:.68em;width:5px;height:5px;border-radius:50%;background:var(--line2)}
 .pv li.mine{background:linear-gradient(transparent 58%,var(--tint2) 58%);display:inline-block}
 .p-act{padding:12px 16px 14px;border-top:1px solid var(--line);background:var(--surf2);display:grid;gap:8px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 15px;border-radius:13px;
+.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 15px;border-radius:13px;
   border:1.5px solid var(--line2);background:var(--surf);font-weight:700;font-size:14px;color:var(--tx);transition:var(--dur) var(--ease)}
 .btn:hover{border-color:var(--acc);background:var(--tint)}
 .btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -339,6 +339,23 @@ select.in:disabled{opacity:.6;cursor:not-allowed}
 .judge-mini b{color:var(--tx2);margin-right:4px}
 .ready{font-size:12.5px;color:var(--tx3)}
 
+/* ── 웹에 올리기 ── */
+.steps li>span{min-width:0}
+.steps code,.tipbox code{font-family:var(--mono);font-size:.9em;background:var(--surf);border:1px solid var(--line);border-radius:6px;padding:0 5px;color:var(--tx);white-space:nowrap}
+.tipbox{margin-top:14px;display:grid;gap:4px;font-size:13.5px;color:var(--tx2);background:var(--warn-bg);border-radius:12px;padding:11px 14px}
+.tipbox b{color:var(--warn);font-size:12.5px}
+.hcard{position:relative;text-align:left;padding:14px 15px;border-radius:16px;border:1.5px solid var(--line);background:var(--surf);display:flex;flex-direction:column;gap:5px;transition:var(--dur) var(--ease)}
+.hcard em{align-self:flex-start;font-style:normal;font-size:11px;font-weight:800;color:var(--pink-tx);background:var(--pink);padding:2px 8px;border-radius:999px}
+.hcard b{font-family:var(--font-t);font-size:16px;font-weight:800}
+.hcard small{font-size:12.5px;color:var(--tx2);line-height:1.45}
+.hcard:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:var(--sh2)}
+.hcard[aria-pressed="true"]{border-color:var(--acc);background:var(--tint);box-shadow:0 0 0 3px var(--tint)}
+.hcard[aria-pressed="true"]::after{content:"✓ 선택";position:absolute;top:13px;right:14px;font-size:11.5px;font-weight:800;color:var(--acc)}
+.hostbox{margin-top:var(--sp4);border:1.5px dashed var(--line2);border-radius:16px;background:var(--surf2);padding:14px 15px}
+.hostbox .up-head{margin-bottom:12px}
+.hostbox .up-head .btn{margin-left:auto;min-height:42px;font-size:14px;box-shadow:none}
+.hostbox .help{margin-top:12px}
+
 /* ── 함께 연습 ── */
 .practice{border:1.5px solid transparent;background:linear-gradient(var(--surf),var(--surf)) padding-box,linear-gradient(120deg,var(--c-game),var(--acc)) border-box;padding:15px var(--sp5)}
 .pr-idle{display:flex;align-items:center;gap:var(--sp4)}
@@ -415,7 +432,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
   .card{padding:var(--sp4);border-radius:16px}
   .sitebar{grid-template-columns:minmax(0,1fr);padding:var(--sp4)}
   .grid2,.fixes,.promise{grid-template-columns:minmax(0,1fr)}
-  .grid3.types{grid-template-columns:minmax(0,1fr)}
+  .grid3.types,.grid3.hosts{grid-template-columns:minmax(0,1fr)}
   .tcard{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:11px}
   .tcard .ti{margin:0} .tcard p,.tcard small{flex-basis:100%}
   .judge,.legend,.upgrid{grid-template-columns:minmax(0,1fr)}
@@ -429,6 +446,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
   .aib{height:44px;padding:0 11px 0 7px;font-size:13.5px}
   .grid3.lays{gap:8px} .lay{padding:7px} .lay small{display:none}
 }
+@media(max-width:430px){.tabs-in{gap:5px}.tab{padding:0 6px;gap:5px}.tab i{width:22px;height:22px;border-radius:7px;font-size:12px}.tab b{font-size:13px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -457,6 +475,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
     <button class="tab" type="button" role="tab" data-v="game" id="tab-game" aria-controls="v-game"><i>1</i><span><b><span class="lg">게임으로 몸풀기</span><span class="sm">게임</span></b><small>프롬프트 골라 바로 만들기</small></span></button>
     <button class="tab" type="button" role="tab" data-v="lab" id="tab-lab" aria-controls="v-lab"><i>2</i><span><b><span class="lg">실험실 계획 세우기</span><span class="sm">계획</span></b><small>탐구형 · 실험형 · 게임형</small></span></button>
     <button class="tab" type="button" role="tab" data-v="fix" id="tab-fix" aria-controls="v-fix"><i>3</i><span><b><span class="lg">만들고 고치기</span><span class="sm">고치기</span></b><small>실행하고 다듬기</small></span></button>
+    <button class="tab" type="button" role="tab" data-v="pub" id="tab-pub" aria-controls="v-pub"><i>4</i><span><b><span class="lg">웹에 올리기</span><span class="sm">올리기</span></b><small>저장하고 게시하기</small></span></button>
   </div>
 </nav>
 
@@ -587,7 +606,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
         <div class="card">
           <div class="ch"><span class="n">1</span><h3 id="runTitle">실행하는 법</h3></div>
           <ol class="steps" id="runSteps"></ol>
-          <p class="help" style="margin-top:12px">메모장이 없는 기기(크롬북·아이패드)에서는 만든 것을 바로 실행해 주는 AI를 쓰거나 선생님께 물어봐요.</p>
+          <p class="help" style="margin-top:12px">메모장이 없는 기기(크롬북·아이패드)에서는 만든 것을 바로 실행해 주는 AI를 쓰거나 선생님께 물어봐요. 웹에 올려 주소로 보여 주려면 ④ 「웹에 올리기」로 가요.</p>
         </div>
 
         <div class="card">
@@ -623,10 +642,46 @@ footer a:hover{color:var(--acc);text-decoration:underline}
             <label class="fld"><span class="lbl">학번</span><input class="in" id="rId" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="예) 20312"></label>
             <label class="fld"><span class="lbl">이름</span><input class="in" id="rName" maxlength="10" autocomplete="off" placeholder="이름"></label>
           </div>
+          <label class="fld"><span class="lbl">게시한 주소 <small>선택 · 웹에 올렸다면</small></span>
+            <input class="in" id="rUrl" maxlength="120" inputmode="url" autocomplete="off" placeholder="예) https://my-lab.netlify.app"></label>
           <label class="fld"><span class="lbl">느낀 점·알게 된 것 <small>한두 문장</small></span>
             <textarea class="in" id="rMemo" maxlength="200" placeholder="예) 프롬프트에 규칙을 자세히 쓸수록 내가 원하는 게임이 나왔다."></textarea></label>
           <div class="up-act"><button class="btn pri" type="button" id="recSave"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>기록지 저장(txt)</button></div>
           <p class="help">내가 쓴 프롬프트, 확인한 것, 더한 기능이 함께 담겨요. 파일 이름은 ‘만든 것_학번_이름_날짜’예요. 학번과 이름은 이 기기에 남기지 않아요.</p>
+        </div>
+      </section>
+
+      <!-- ④ 웹에 올리기 -->
+      <section id="v-pub" role="tabpanel" aria-labelledby="tab-pub" hidden>
+        <div class="intro"><h2>내 작품을 세상에 보여 줘요</h2><p>HTML 파일로 저장한 다음 웹에 올리면, 주소 하나로 누구나 볼 수 있어요.</p></div>
+
+        <div class="card">
+          <div class="ch"><span class="n">1</span><h3 id="saveTitle">HTML 파일로 저장하기</h3><span class="sub">위에서 AI를 바꾸면 방법도 바뀌어요</span></div>
+          <ol class="steps" id="saveSteps"></ol>
+          <div class="tipbox"><b>꼭 기억해요</b>
+            <span>파일 이름은 영어 소문자로 <code>index.html</code> — 웹에 올리면 이 파일이 첫 화면이 돼요.</span>
+            <span>새 폴더를 하나 만들어(예: <code>my-lab</code>) 그 안에 넣어 두면 올리기 편해요.</span>
+            <span>메모장이 없는 기기(크롬북·아이패드)는 선생님께 물어봐요.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><span class="n">2</span><h3>웹에 올리는 방법 고르기</h3><span class="sub">셋 다 무료로 시작할 수 있어요</span></div>
+          <div class="grid3 hosts" id="hostGrid"></div>
+          <div class="hostbox">
+            <div class="up-head"><b id="hostName"></b><a class="btn pri" id="hostOpen" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요"></a></div>
+            <ol class="steps" id="hostSteps"></ol>
+            <p class="help">사이트 화면의 영어 글자는 조금씩 바뀔 수 있어요. 비슷한 말을 찾아 눌러요. 계정을 만들 때는 서비스마다 나이 조건이 있으니 선생님·보호자와 함께해요.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><span class="n">3</span><h3>올린 뒤 확인하기</h3><span class="sub">올린 것은 누구나 볼 수 있어요</span></div>
+          <ul class="promise">
+            <li>이름·학교·사진 같은 개인 정보가 들어 있지 않은지 확인해요</li>
+            <li>주소를 휴대폰으로도 열어 봐요</li>
+            <li>고친 뒤에는 다시 올려야 바뀌어요</li>
+            <li>주소를 ③ 실습 기록지에 적어 선생님께 알려요</li>
+          </ul>
         </div>
       </section>
     </main>
@@ -669,7 +724,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
   AI가 만든 결과는 초안이에요. 과학 내용이 맞는지 교과서와 견주어 확인하고, 선생님과 함께 다듬어요.<br>
   나이 제한이 있는 AI는 선생님 안내에 따라 써요. 입력한 내용은 이 브라우저에만 저장되고 어디로도 보내지 않아요.<br>
   ⓒ 2026 송쌤과학 · <a href="https://www.youtube.com/@songsamscience" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">YouTube @songsamscience</a>
-  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">Instagram @songsamscience</a> · v1.2 · 2026-11-11
+  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열려요">Instagram @songsamscience</a> · v1.3 · 2026-11-11
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1460,7 +1515,7 @@ const GRADES=[
  {id:'h1b',label:'고1 통합과학2',level:'고등학교 1학년 통합과학',units:['변화와 다양성','환경과 에너지','과학과 미래 사회']}
 ];
 
-/* ════════ 송쌤과학 가상실험실 만들기 (학생용) v1.2 ════════ */
+/* ════════ 송쌤과학 가상실험실 만들기 (학생용) v1.3 ════════ */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LS='ssl-student-v1';
@@ -1471,6 +1526,24 @@ const SAVE_RUN=n=>[
   'AI가 쓴 코드 칸의 「복사」 단추를 눌러요. 파일을 내려받게 해 줬다면 4번으로 가요.',
   '메모장을 열어 붙여 넣고 「다른 이름으로 저장」을 눌러요. 파일 이름 끝을 .html로, 파일 형식을 ‘모든 파일’로, 인코딩을 UTF-8로 골라요.',
   '저장한 파일을 두 번 눌러 브라우저에서 열어요.'];
+/* ── 4번 탭 : AI별 HTML 저장법 · 웹에 올리는 곳 3가지 ── */
+const NOTE='메모장을 열어 Ctrl+V로 붙여 넣고, 「파일 → 다른 이름으로 저장」에서 파일 이름을 `index.html`, 파일 형식을 ‘모든 파일’, 인코딩을 UTF-8로 골라 저장해요.';
+const OPENCHK='저장한 `index.html`을 두 번 눌러 브라우저에서 잘 열리는지 확인해요.';
+const SAVE={
+ Copilot:['답변에서 코드가 들어 있는 칸의 오른쪽 위 「복사」를 눌러요. 코드가 여러 칸으로 나뉘어 있으면 “전체 코드를 코드 블록 하나로 다시 보여 줘”라고 부탁해요.',NOTE,'Copilot이 파일을 내려받게 해 줬다면, 내려받은 파일의 이름만 `index.html`로 바꿔도 돼요.',OPENCHK],
+ Gemini:['Canvas 창 위쪽에서 「코드」 보기로 바꿔요.','코드 창의 「복사」 단추를 눌러요.',NOTE,OPENCHK],
+ ChatGPT:['캔버스 창 오른쪽 위의 「복사」 단추를 눌러요. 내려받기 단추가 보이면 그것을 눌러도 돼요.',NOTE,'내려받았다면 파일의 이름만 `index.html`로 바꿔요.',OPENCHK],
+ Claude:['아티팩트 창의 내려받기(↓) 단추를 눌러 HTML 파일로 저장하고, 파일 이름을 `index.html`로 바꿔요.','내려받기 단추가 안 보이면 「복사」를 눌러요. 그다음 '+NOTE,OPENCHK]
+};
+const HOSTS=[
+ {k:'netlify',name:'Netlify Drop',tag:'가장 쉬움',one:'폴더를 끌어다 놓으면 바로 주소가 생겨요',url:'https://app.netlify.com/drop',open:'Netlify Drop 열기',
+  steps:['`index.html`이 들어 있는 폴더를 준비해요.','「Netlify Drop 열기」를 눌러 app.netlify.com/drop 으로 가요.','폴더를 통째로 화면의 점선 칸에 끌어다 놓아요.','잠시 뒤 ○○.netlify.app 으로 끝나는 주소가 생겨요. 눌러서 내 작품이 열리는지 확인해요.','로그인하지 않고 올린 사이트는 1시간 뒤 사라져요. 계속 쓰려면 화면의 안내에 따라 가입(Sign up)해서 내 사이트로 등록해요.','고친 뒤에는 내 사이트의 Deploys 화면에 새 폴더를 다시 끌어다 놓아요.']},
+ {k:'github',name:'GitHub Pages',tag:'오래 쓰는 주소',one:'저장소에 올리고 Pages를 켜요. 고친 기록이 남아요',url:'https://github.com/new',open:'GitHub 새 저장소 열기',
+  steps:['github.com에 로그인해요. 계정이 없으면 선생님과 함께 만들어요.','「GitHub 새 저장소 열기」를 눌러 Repository name에 영어 이름(예: `my-lab`)을 쓰고, Public을 고른 뒤 「Create repository」를 눌러요.','「uploading an existing file」(또는 Add file → Upload files)을 눌러 `index.html`을 끌어다 놓고 「Commit changes」를 눌러요.','위쪽 「Settings」로 간 다음 왼쪽에서 「Pages」를 눌러요.','Branch를 `main`, 폴더를 `/ (root)`로 고르고 「Save」를 눌러요.','1~2분 뒤 https://내아이디.github.io/저장소이름/ 주소로 열려요.','고칠 때는 `index.html`을 같은 방법으로 다시 올려요. 이름이 같으면 새 파일로 바뀌어요.']},
+ {k:'cloudflare',name:'Cloudflare',tag:'빠른 전 세계 서버',one:'폴더나 zip 파일을 끌어다 놓아요',url:'https://www.cloudflare.com/drop/',open:'Cloudflare Drop 열기',
+  steps:['`index.html`이 들어 있는 폴더를 준비해요. zip 파일로 묶어도 돼요.','「Cloudflare Drop 열기」를 눌러 cloudflare.com/drop 으로 가요.','폴더나 zip 파일을 화면에 끌어다 놓아요.','잠시 뒤 ○○.workers.dev 로 끝나는 주소가 생겨요. 눌러서 확인해요.','이 주소는 1시간 동안만 열려요. 계속 쓰려면 60분 안에 화면의 안내(Claim)에 따라 Cloudflare 계정으로 등록해요.','계정이 있으면 대시보드의 「Workers & Pages」에서 「Create application」을 누르고 파일을 끌어다 올릴 수도 있어요. 그러면 ○○.pages.dev 주소가 생겨요.']}
+];
+const stepHtml=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
 const AIS=[
  {k:'Copilot',mark:'Co',c:'#0F6FB8',rec:1,url:'https://m365.cloud.microsoft/chat',budget:2000,lvl:'short',
   who:'학교 Microsoft 365 계정',
@@ -1632,11 +1705,11 @@ const S={view:'game',src:'game',ai:'Copilot',level:'short',game:'snake',last:'sn
   f:{explore:{grade:'',unit:'',title:'',q:'',a:'',b:'',c:'',rule:'',exx:'',moodx:''},lab:{grade:'',unit:'',title:'',q:'',a:'',b:'',c:'',rule:'',exx:'',moodx:''},game:{grade:'',unit:'',title:'',q:'',how:'퀴즈 맞히기',howx:'',a:'',b:'',rule:'',exx:'',moodx:''}},
   md:{explore:'bright',lab:'bright',game:'game'},
   ex:{explore:[...EX_DEF.explore],lab:[...EX_DEF.lab],game:[...EX_DEF.game]},
-  lay:{...LAY_DEF},mode:'now',up:[],chk:[]};
+  lay:{...LAY_DEF},mode:'now',up:[],chk:[],host:'netlify'};
 let prac=-1; const pracDone=new Set();
 function load(){
   try{const d=JSON.parse(localStorage.getItem(LS)||'null'); if(!d||typeof d!=='object')return;
-    ['view','src','ai','level','game','last','custom','idea','type','mode'].forEach(k=>{if(typeof d[k]==='string')S[k]=d[k]});
+    ['view','src','ai','level','game','last','custom','idea','type','mode','host'].forEach(k=>{if(typeof d[k]==='string')S[k]=d[k]});
     ['explore','lab','game'].forEach(t=>{
       if(d.f&&d.f[t])Object.keys(S.f[t]).forEach(k=>{if(typeof d.f[t][k]==='string')S.f[t][k]=d.f[t][k]});
       if(d.ex&&Array.isArray(d.ex[t]))S.ex[t]=d.ex[t].filter(x=>EXTRAS.some(e=>e[0]===x)).slice(0,3);
@@ -1650,7 +1723,8 @@ function load(){
   if(!GAMES.some(g=>g.id===S.last))S.last=GAMES[0].id;
   if(S.game==='custom'?!one(S.custom):!GAMES.some(g=>g.id===S.game))S.game=S.last;
   if(!TYPES[S.type])S.type='explore';
-  if(!['game','lab','fix'].includes(S.view))S.view='game';
+  if(!['game','lab','fix','pub'].includes(S.view))S.view='game';
+  if(!HOSTS.some(h=>h.k===S.host))S.host='netlify';
   if(!['game','lab'].includes(S.src))S.src='game';
   if(!['short','long'].includes(S.level))S.level='short';
   if(!MODES.some(m=>m[0]===S.mode))S.mode='now';
@@ -1842,7 +1916,7 @@ const fname=s=>one(s).replace(/[\\/:*?"<>|]/g,'').replace(/\s+/g,'_');
 function buildRecord(){
   const made=S.src==='lab'?TYPES[S.type].name+' 가상실험실 · '+(one(S.f[S.type].title)||'주제 미정'):'게임 · '+game().name;
   const ups=UPS.filter(u=>S.up.includes(u.n)).map(u=>u.t);
-  return ['송쌤과학 가상실험실 만들기 — 실습 기록지','','날짜: '+today(),'학번: '+one($('#rId').value),'이름: '+one($('#rName').value),'만든 것: '+made,'사용한 AI: '+ai().k,'',
+  return ['송쌤과학 가상실험실 만들기 — 실습 기록지','','날짜: '+today(),'학번: '+one($('#rId').value),'이름: '+one($('#rName').value),'만든 것: '+made,'사용한 AI: '+ai().k,'게시한 주소: '+(one($('#rUrl').value)||'(아직 올리지 않음)'),'',
     '[실행해 보고 확인한 것]',...CHECKS.map((c,i)=>(S.chk.includes(i)?'✓ ':'□ ')+c[0]),'',
     '[더한 기능]',ups.length?ups.join(', '):'없음','',
     '[느낀 점·알게 된 것]',$('#rMemo').value.trim()||'(쓰지 않음)','',
@@ -1901,15 +1975,25 @@ function renderPrev(){
   $('#btnGo').innerHTML='복사하고 '+a.k+' 열기'+arrow;$('#dockGo').innerHTML='복사하고 '+a.k+' 열기'+arrow;
   save();
 }
+function renderPub(){
+  const a=ai(),h=HOSTS.find(x=>x.k===S.host)||HOSTS[0];
+  $('#saveTitle').textContent=a.k+'에서 HTML 파일로 저장하기';
+  $('#saveSteps').innerHTML=SAVE[a.k].map(s=>'<li><span>'+stepHtml(s)+'</span></li>').join('');
+  $('#hostGrid').innerHTML=HOSTS.map(x=>'<button class="hcard" type="button" data-host="'+x.k+'" aria-pressed="'+(x.k===h.k)+'"><em>'+x.tag+'</em><b>'+x.name+'</b><small>'+x.one+'</small></button>').join('');
+  $('#hostName').textContent=h.name+' · 올리는 순서';
+  const o=$('#hostOpen');o.href=h.url;o.innerHTML=h.open+'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  $('#hostSteps').innerHTML=h.steps.map(s=>'<li><span>'+stepHtml(s)+'</span></li>').join('');
+}
 function scrollToEl(el){
   if(!el)return;
   const off=$('.top').offsetHeight+$('.tabs').offsetHeight+(prac>=0&&getComputedStyle($('#prac')).position==='sticky'?$('#prac').offsetHeight+10:0)+14;
   window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-off),behavior:'smooth'});
 }
 function setView(v,keepScroll){
-  S.view=v;if(v!=='fix')S.src=v;
-  ['game','lab','fix'].forEach(k=>{$('#v-'+k).hidden=k!==v;const t=$('#tab-'+k);t.setAttribute('aria-selected',k===v);t.tabIndex=k===v?0:-1});
+  S.view=v;if(v==='game'||v==='lab')S.src=v;
+  ['game','lab','fix','pub'].forEach(k=>{$('#v-'+k).hidden=k!==v;const t=$('#tab-'+k);t.setAttribute('aria-selected',k===v);t.tabIndex=k===v?0:-1});
   if(v==='fix')renderFix();
+  if(v==='pub')renderPub();
   renderPrev();
   if(!keepScroll){const top=$('.hero').offsetTop+$('.hero').offsetHeight;if(window.scrollY>top)window.scrollTo({top:top});}
 }
@@ -1960,7 +2044,7 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   const d=b.dataset;
   if(d.v){setView(d.v);return}
-  if(d.ai){const was=S.level;S.ai=d.ai;S.level=ai().lvl;renderAIs();if(S.view==='fix')renderFix();renderPrev();if(prac>=0)renderPrac();
+  if(d.ai){const was=S.level;S.ai=d.ai;S.level=ai().lvl;renderAIs();if(S.view==='fix')renderFix();if(S.view==='pub')renderPub();renderPrev();if(prac>=0)renderPrac();
     toast(d.ai+'에 맞게 프롬프트를 바꿨어요.'+(was!==S.level?' 길이는 ‘'+(S.level==='short'?'짧게':'자세히')+'’가 잘 맞아요.':''));return}
   if(d.g){S.game=S.last=d.g;S.src='game';syncCustom();renderPrev();
     if(window.matchMedia('(max-width:1080px)').matches)toast(game().name+' 프롬프트가 준비됐어요. 아래에서 확인해요.');return}
@@ -1980,6 +2064,7 @@ document.addEventListener('click',e=>{
   if(d.mood){S.md[S.type]=d.mood;S.f[S.type].moodx='';renderPicks();renderPrev();return}
   if(d.mode){S.mode=d.mode;renderPicks();renderPrev();return}
   if(d.fix!==undefined){copyText(FIXES[+d.fix][2]).then(ok=>toast(ok?'복사했어요. AI 대화창에 붙여 넣고 색칠한 곳을 내 말로 바꿔요.':'복사하지 못했어요. 글을 직접 선택해 복사해 주세요.'));return}
+  if(d.host){S.host=d.host;renderPub();save();return}
   if(d.up){const i=S.up.indexOf(d.up);if(i>=0)S.up.splice(i,1);else S.up.push(d.up);renderUp();save();return}
   if(d.prac!==undefined){pracGo(+d.prac);return}
   switch(b.id){
@@ -2026,7 +2111,7 @@ document.addEventListener('change',e=>{
 });
 $('.tabs-in').addEventListener('keydown',e=>{
   if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;
-  const o=['game','lab','fix'],i=e.key==='Home'?0:e.key==='End'?2:(o.indexOf(S.view)+(e.key==='ArrowRight'?1:2))%3;
+  const o=['game','lab','fix','pub'],i=e.key==='Home'?0:e.key==='End'?3:(o.indexOf(S.view)+(e.key==='ArrowRight'?1:3))%4;
   setView(o[i]);$('#tab-'+o[i]).focus();e.preventDefault();
 });
 
@@ -2034,7 +2119,7 @@ $('.tabs-in').addEventListener('keydown',e=>{
 load();
 try{const t=localStorage.getItem('ssl-theme');if(t==='light'||t==='dark')themeMode=t}catch(e){}
 applyTheme();renderAIs();renderGames();renderLab();renderPrac();setView(S.view,true);
-window.LabMaker={S,AIS,TYPES,PRESETS,PRAC,UPS,GRADES,FREE,CHECKS,buildGame,buildLab,buildUp,buildRecord,currentText,fileName};
+window.LabMaker={S,SAVE,HOSTS,AIS,TYPES,PRESETS,PRAC,UPS,GRADES,FREE,CHECKS,buildGame,buildLab,buildUp,buildRecord,currentText,fileName};
 </script>
 </body>
 </html>
